@@ -6,7 +6,7 @@ import type { RequestOptions } from "./utils/types";
  * React hook for fetching data in Next.js client components using SWR,
  * leveraging the Next.js’s built-in fetch cache. It first returns any cached
  * response immediately, then automatically fetches and returns the fresh
- * response.
+ * response after revalidation.
  *
  * @param url       The URL to fetch.
  * @param options   Optional fetch options.
