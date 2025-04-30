@@ -11,7 +11,9 @@
 
 ## Installation
 
-1. Install via npm or yarn or bun:
+### 1. Install the Package
+
+Start by adding Next Query to your project:
 
 ```bash
 npm install @bigbang-sdk/next-query
@@ -21,18 +23,29 @@ yarn add @bigbang-sdk/next-query
 bun add @bigbang-sdk/next-query
 ```
 
-2. Add the router handler at /api/stream
+### 2. Mount Handler
+
+To handle API requests for fetches, you need to set up a route handler in your Nextjs project.
+
+Create a new file or route in your project's designated catch-all route handler. This route should handle requests for the path /api/next-query/\*
+
+`Folder Path: /app/api/next-query/[...all]/route.ts`
 
 ```tsx
 import { revalidateTag } from "next/cache";
 import { routeHandler } from "@bigbang-sdk/next-query";
 
-export const { POST } = routeHandler(revalidateTag);
+export const { GET, POST } = routeHandler(revalidateTag);
 ```
 
 ## Usage
 
+Start by using the `useQuery` hook in your client components. Make sure to include "use client" at the top of your file.
+
+`data` will update twice: first with cached data, and then with fresh data.
+
 ```tsx
+"use client";
 import { useQuery } from "@bigbang-sdk/next-query";
 
 export default function Chat() {
@@ -55,7 +68,7 @@ export default function Chat() {
 
 ## API
 
-### `useQuery<T>(url: string, options?: RequestOptions)`
+`useQuery(url: string, options?: RequestOptions)`
 
 Returns an object with:
 
@@ -65,7 +78,7 @@ Returns an object with:
 | `error`     | `Error \| null` | Any error encountered during streaming.                        |
 | `isLoading` | `boolean`       | `true` until the first chunk (or error) arrives, then `false`. |
 
-### `RequestOptions`
+### RequestOptions
 
 This is just a wrapper around the standard [Fetch API options](https://developer.mozilla.org/docs/Web/API/Fetch_API/Using_Fetch). You can pass headers, method, body, etc. Example:
 
@@ -83,7 +96,7 @@ const opts: RequestOptions = {
 
 1. Fork the repository
 2. Commit your changes using [Conventional Commits](https://www.conventionalcommits.org/en) (`git commit -m "feat: add new feature"`)
-3. Open a Pull Request
+3. Open a Pull Request on the `dev` branch
 
 Please open issues for bug reports or feature requests.
 
