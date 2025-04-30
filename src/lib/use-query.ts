@@ -16,7 +16,7 @@ import type { RequestOptions } from "./utils/types";
  *   - `isLoading`: `true` until the **first** chunk (or error) arrives.
  *   - `stop`: function to imperatively abort the stream.
  */
-export function useNextQuery<T>(
+export function useQuery<T>(
   url: string,
   options?: RequestOptions
 ): {
