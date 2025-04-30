@@ -4,15 +4,14 @@
 
 ## Features
 
-- **Immediate cached response**: Returns the cached result (if any) without waiting.
-- **Streaming updates**: Streams fresh data chunks as they arrive.
-- **Automatic loading state**: `isLoading` is `true` until the first chunk (or error) arrives.
-- **Error handling**: Captures and returns errors (non-abort) in the stream.
-- **Abort control**: Imperatively stop the stream with the returned `stop()` function.
+- **Immediate cached response**: Returns the cached result (if any) from Next.js fetch cache.
+- **Fresh response after revalidation**: Revalidates the cache and sends the fresh response.
+- **Automatic loading state**: `isLoading` is `true` until the first cached result arrives.
+- **Error handling**: Captures and returns errors in the stream.
 
 ## Installation
 
-Install via npm or yarn or bun:
+1. Install via npm or yarn or bun:
 
 ```bash
 npm install @bigbang-sdk/next-query
@@ -22,25 +21,28 @@ yarn add @bigbang-sdk/next-query
 bun add @bigbang-sdk/next-query
 ```
 
+2. Add the router handler at /api/stream
+
+```tsx
+import { revalidateTag } from "next/cache";
+import { routeHandler } from "@bigbang-sdk/next-query";
+
+export const { POST } = routeHandler(revalidateTag);
+```
+
 ## Usage
 
 ```tsx
 import { useQuery } from "@bigbang-sdk/next-query";
 
-interface Message {
-  id: string;
-  text: string;
-}
-
 export default function Chat() {
-  const { data, error, isLoading, stop } = useQuery<Message[]>("/api/messages/stream", { headers: { "Content-Type": "application/json" } });
+  const { data, error, isLoading } = useQuery("https://example.com/");
 
   if (isLoading) return <p>Loading messages...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div>
-      <button onClick={stop}>Stop Updates</button>
       <ul>
         {data?.map((msg) => (
           <li key={msg.id}>{msg.text}</li>
@@ -59,10 +61,9 @@ Returns an object with:
 
 | Property    | Type            | Description                                                    |
 | ----------- | --------------- | -------------------------------------------------------------- |
-| `data`      | `T \| null`     | The latest data chunk or `null` if none received yet.          |
-| `error`     | `Error \| null` | Any non-abort error encountered during streaming.              |
+| `data`      | `T \| null`     | The latest data value or `null` if none received yet.          |
+| `error`     | `Error \| null` | Any error encountered during streaming.                        |
 | `isLoading` | `boolean`       | `true` until the first chunk (or error) arrives, then `false`. |
-| `stop`      | `() => void`    | Call to abort the stream immediately.                          |
 
 ### `RequestOptions`
 
@@ -81,7 +82,7 @@ const opts: RequestOptions = {
 ## Contributing
 
 1. Fork the repository
-2. Commit your changes using [Conventional Commits] (https://www.conventionalcommits.org/en) (`git commit -m "feat: add new feature"`)
+2. Commit your changes using [Conventional Commits](https://www.conventionalcommits.org/en) (`git commit -m "feat: add new feature"`)
 3. Open a Pull Request
 
 Please open issues for bug reports or feature requests.
