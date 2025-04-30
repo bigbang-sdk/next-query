@@ -51,10 +51,8 @@ export class StreamProducer<T = unknown> {
    * @param init Optional ResponseInit overrides (status, headers, etc.).
    * @returns A Readable-stream-based Response.
    */
-  public toResponse(init: ResponseInit = {}): Response {
-    const headers = new Headers(init.headers);
-    headers.set("Content-Type", "application/x-ndjson; charset=utf-8");
-    return new Response(this.stream, { ...init, headers });
+  public sendResponse(init: ResponseInit = {}): Response {
+    return this.encoder.sendResponse(init);
   }
 
   /**
@@ -102,14 +100,14 @@ export class StreamProducer<T = unknown> {
   private async run(): Promise<void> {
     try {
       const first = await this.processFetch();
-      await this.send({ success: true, data: first });
+      await this.sendChunk({ success: true, data: first });
 
       this.invalidate(this.tag);
 
       const second = await this.processFetch();
-      await this.send({ success: true, data: second });
+      await this.sendChunk({ success: true, data: second });
     } catch (err: any) {
-      await this.send({ success: false, error: err.message });
+      await this.sendChunk({ success: false, error: err.message });
     } finally {
       await this.encoder.close();
     }
@@ -120,7 +118,7 @@ export class StreamProducer<T = unknown> {
    *
    * @param msg The payload to send over the stream.
    */
-  private send(msg: RequestResponse): Promise<void> {
-    return this.encoder.send(JSON.stringify(msg) + "\n");
+  private sendChunk(msg: RequestResponse): Promise<void> {
+    return this.encoder.sendChunk(JSON.stringify(msg) + "\n");
   }
 }
