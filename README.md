@@ -1,6 +1,6 @@
 # Next Query
 
-**Next Query** is a lightweight React hook for fetching streaming data in Next.js client components. It leverages Next.js’s built-in fetch cache to return any cached response immediately, then automatically fetches and returns the fresh response via a streaming interface.
+**Next Query** is a React hook for fetching data in Next.js client components using SWR, leveraging the Next.js’s built-in fetch cache. It first returns any cached response immediately, then automatically fetches and returns the fresh response after revalidation.
 
 ## Features
 
