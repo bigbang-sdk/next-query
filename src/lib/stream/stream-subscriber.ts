@@ -30,7 +30,7 @@ function createLineSplitter(): TransformStream<string, string> {
  */
 export class StreamSubscriber<T> {
   private readonly controller = new AbortController();
-  private readonly apiPath = "/api/stream";
+  private readonly apiPath = "/api/next-query/fetch";
 
   /**
    * @param url       The remote URL to be fetched by the stream producer.

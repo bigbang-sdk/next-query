@@ -27,7 +27,7 @@ export class StreamEncoder {
   /**
    * Enqueue a text chunk. Returns once backpressure allows.
    */
-  send(chunk: string): Promise<void> {
+  sendChunk(chunk: string): Promise<void> {
     return this.writer.write(chunk);
   }
 
@@ -49,7 +49,7 @@ export class StreamEncoder {
    * Wraps this.stream into a Fetch API Response.
    * @param init Optional ResponseInit (headers, status, etc.)
    */
-  toResponse(init?: ResponseInit): Response {
+  sendResponse(init?: ResponseInit): Response {
     const headers = new Headers(init?.headers);
     headers.set("Content-Type", "application/x-ndjson; charset=utf-8");
     return new Response(this.stream, { ...init, headers });
