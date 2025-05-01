@@ -14,7 +14,7 @@ permissions:
 jobs:
   release:
     name: Release
-    if: ${{ github.repository_owner == 'bbdotbuild' }}
+    if: ${{ github.repository_owner == 'bigbang-sdk' }}
 
     runs-on: ubuntu-latest
     steps:
