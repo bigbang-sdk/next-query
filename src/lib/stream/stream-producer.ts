@@ -39,9 +39,17 @@ export class StreamProducer<T = unknown> {
   /** Orchestrates: fetch → invalidate → fetch → close. */
   private async run(): Promise<void> {
     try {
-      await this.sendChunk({ success: true, data: await this.resolveFetch() });
+      const cachedData = await this.resolveFetch();
+      await this.sendChunk({ success: true, data: cachedData });
+
       this.invalidate(this.tag);
-      await this.sendChunk({ success: true, data: await this.resolveFetch() });
+
+      const freshData = await this.resolveFetch();
+      const isEqual = JSON.stringify(cachedData) === JSON.stringify(freshData);
+
+      if (!isEqual) {
+        await this.sendChunk({ success: true, data: freshData });
+      }
     } catch (err: unknown) {
       await this.sendChunk({ success: false, error: parseErrorMessage(err) });
     } finally {

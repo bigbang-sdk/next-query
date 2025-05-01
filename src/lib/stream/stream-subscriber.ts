@@ -11,15 +11,18 @@ export class StreamSubscriber<T> {
   private readonly controller = new AbortController();
   private readonly handlerPath = "/api/next-query/fetch";
 
-  constructor(private readonly url: string, private readonly onData: (chunk: T) => void, private readonly onError: (err: Error) => void, private readonly options?: RequestOptions) {}
+  constructor(private readonly url: string, private readonly onData: (chunk: T) => void, private readonly onError: (err: Error) => void, private readonly onComplete: () => void, private readonly options?: RequestOptions) {}
 
   /** Begin the fetch + decode pipeline. */
   public async start(): Promise<void> {
     try {
       const body = await this.resolveFetch(this.url, this.options);
-
       const decoder = new StreamDecoder<T>(this.onData, this.onError);
+
       await decoder.decode(body);
+
+      // ✅ trigger onCompleted when decoding is done
+      this.onComplete();
     } catch (err: any) {
       if (err.name !== "AbortError") this.onError(err);
     }

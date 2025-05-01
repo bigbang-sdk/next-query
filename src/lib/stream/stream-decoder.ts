@@ -24,6 +24,7 @@ export class StreamDecoder<T> {
     try {
       while (true) {
         const { value: chunk, done } = await reader.read();
+
         if (done) break;
 
         this.buffer += chunk!;
