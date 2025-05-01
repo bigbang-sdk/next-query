@@ -87,8 +87,18 @@ export function useQuery<T>(url: string, options?: RequestOptions): StoreSnapsho
           notify();
         };
 
+        const onComplete = () => {
+          snapshotRef.current = {
+            ...snapshotRef.current,
+            isLoading: false,
+            isFreshLoading: false,
+            isCacheLoading: false,
+          };
+          notify();
+        };
+
         // Instantiate and start streaming
-        const sub = new StreamSubscriber<T>(url, onData, onError, options);
+        const sub = new StreamSubscriber<T>(url, onData, onError, onComplete, options);
         subscriberRef.current = sub;
         sub.start().catch((err) => onError(err instanceof Error ? err : new Error(String(err))));
       }
