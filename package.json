@@ -12,7 +12,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bbdotbuild/next-query.git"
+    "url": "https://github.com/bigbang-sdk/next-query.git"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
