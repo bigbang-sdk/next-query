@@ -1,14 +1,13 @@
+import { NDJSON } from "../utils/ndjson";
+
 /**
  * Streams text chunks as UTF-8 Uint8Arrays, with built-in backpressure.
  */
 export class StreamEncoder {
   /** Readable side emitting Uint8Array chunks. */
   public readonly stream: ReadableStream<Uint8Array>;
-  /** Resolves when the stream is closed. */
-  public readonly closed: Promise<void>;
-
+  /** Writer side accepting text chunks. */
   private writer: WritableStreamDefaultWriter<string>;
-
   /**
    * @param encoder Optional TextEncoder (defaults to utf-8).
    */
@@ -21,7 +20,16 @@ export class StreamEncoder {
 
     this.stream = readable;
     this.writer = writable.getWriter();
-    this.closed = this.writer.closed;
+  }
+
+  /**
+   * Sends stream as a Fetch API Response.
+   */
+  initiateStream(): Response {
+    return new Response(this.stream, {
+      status: 200,
+      headers: NDJSON.HEADERS,
+    });
   }
 
   /**
@@ -43,15 +51,5 @@ export class StreamEncoder {
    */
   abort(reason?: any): void {
     this.writer.abort(reason);
-  }
-
-  /**
-   * Wraps this.stream into a Fetch API Response.
-   * @param init Optional ResponseInit (headers, status, etc.)
-   */
-  sendResponse(init?: ResponseInit): Response {
-    const headers = new Headers(init?.headers);
-    headers.set("Content-Type", "application/x-ndjson; charset=utf-8");
-    return new Response(this.stream, { ...init, headers });
   }
 }

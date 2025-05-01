@@ -1,89 +1,47 @@
-import { RequestOptions } from "./utils/types";
-import { StreamProducer } from "./stream/stream-producer";
+import { fetchHandler } from "./routes/fetch-handler";
+import { parseErrorMessage } from "./utils/error";
+import { NDJSON } from "./utils/ndjson";
 
 type Handler = (req: Request) => Promise<Response>;
 
 /**
- * Factory to create Next.js route handlers for `/api/next-query/[...all]`.
+ * Factory to wire up GET & POST routes for `/api/next-query/[...all]`.
  *
- * @param revalidateTag - Function to invalidate a cache tag (from `next/cache`).
- * @returns An object with `GET` and `POST` handlers.
+ * @param revalidateTag – Next.js cache tag invalidation function
  */
-export function routeHandler(revalidateTag: (tag: string) => void): {
-  GET: Handler;
-  POST: Handler;
-} {
+export function routeHandler(revalidateTag: (tag: string) => void) {
+  const getRoutes: Record<string, Handler> = {};
+
+  const postRoutes: Record<string, Handler> = {
+    fetch: (req) => fetchHandler(req, revalidateTag),
+  };
+
   return {
-    GET: async (req: Request): Promise<Response> => {
-      return errorResponse(`Endpoint not found`);
-    },
-    POST: async (req: Request): Promise<Response> => {
-      const path = getPath(req);
-      switch (path) {
-        case "/fetch":
-          return fetchHandler(req, revalidateTag);
-        default:
-          return errorResponse(`Endpoint not found`);
-      }
-    },
+    GET: (req: Request) => dispatch(req, getRoutes, "GET"),
+    POST: (req: Request) => dispatch(req, postRoutes, "POST"),
   };
 }
 
 /**
- * Handler for POST `/api/next-query/fetch`.
- * Expects a JSON body `{ url: string; options?: RequestOptions }`,
- * then streams the response as NDJSON and revalidates tags.
+ * Given a request and a dispatch table, returns a response.
  *
- * @param req - The incoming Request.
- * @param revalidateTag - Cache revalidation function.
- * @returns A streaming NDJSON response or an error response.
+ * @param req – HTTP request
+ * @param table – mapping of sub-paths to handlers
+ * @param method – HTTP method
  */
-async function fetchHandler(req: Request, revalidateTag: (tag: string) => void): Promise<Response> {
-  try {
-    const { url, options = {} } = (await req.json()) as {
-      url: string;
-      options?: RequestOptions;
-    };
+async function dispatch(req: Request, table: Record<string, Handler>, method: string): Promise<Response> {
+  const segments = new URL(req.url).pathname.split("/").filter(Boolean).slice(2); // remove ["api","next-query"]
+  const key = segments.join("/") || ""; // "" for root
 
-    if (!url) {
-      throw new Error("Missing required field: url");
-    }
-
-    const producer = new StreamProducer(url, options, revalidateTag);
-    return producer.sendResponse({ status: 200 });
-  } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : String(err);
-    const status = msg.includes("Missing") ? 400 : 500;
-    return errorResponse(msg, status);
+  const handler = table[key];
+  if (!handler) {
+    const code = method === "GET" ? 405 : 404;
+    return NDJSON.errorResponse(`Endpoint not found`, code);
   }
-}
-
-/**
- * Extracts the first sub-path segment after `/api/next-query` from the request URL.
- *
- * E.g. "/api/next-query/fetch/extra" → "/fetch/extra"
- *
- * @param req - The incoming Request.
- * @returns A string like "/fetch" or "/fetch/extra".
- */
-function getPath(req: Request): string {
-  const segments = new URL(req.url).pathname.split("/").filter(Boolean).slice(2);
-  return `/${segments.join("/")}`;
-}
-
-/**
- * Creates a concise NDJSON error response.
- *
- * @param message - The error message to include.
- * @param status - HTTP status code (default: 404).
- * @returns A Response with a single-line JSON error and proper headers.
- */
-function errorResponse(message: string, status = 404): Response {
-  const body = JSON.stringify({ success: false, error: message }) + "\n";
-  return new Response(body, {
-    status,
-    headers: {
-      "Content-Type": "application/x-ndjson; charset=utf-8",
-    },
-  });
+  try {
+    return await handler(req);
+  } catch (err: unknown) {
+    const errorMessage = parseErrorMessage(err);
+    return NDJSON.errorResponse(errorMessage, 500);
+  }
 }

@@ -1,13 +1,16 @@
-# Next Query
+# Introduction
 
-**Next Query** is a React hook for fetching data in Next.js client components using SWR, leveraging the Next.js’s built-in fetch cache. It first returns any cached response immediately, then automatically fetches and returns the fresh response after revalidation.
+**Next Query** is a React hook for fetching data in Next.js client components using SWR (Stale-While-Revalidate), leveraging Next.js’s built-in fetch cache.
 
-## Features
+When a request is made through Next Query, the client immediately receives a **cached response**. Then, Next Query automatically **revalidates** the data by fetching a **fresh response** in the background.
 
-- **Immediate cached response**: Returns the cached result (if any) from Next.js fetch cache.
-- **Fresh response after revalidation**: Revalidates the cache and sends the fresh response.
-- **Automatic loading state**: `isLoading` is `true` until the first cached result arrives.
-- **Error handling**: Captures and returns errors in the stream.
+With a single hook, you can now use Next.js’s built-in fetch cache—previously available only in Server Components—within Client Components as well.
+
+- **Fast**, **lightweight** and **reusable** data fetching
+- Leverages Next.js's built-in fetch **cache**
+- **Real-time** experience
+- Automatic Revalidation
+- TypeScript
 
 ## Installation
 
@@ -25,11 +28,13 @@ bun add @bigbang-sdk/next-query
 
 ### 2. Mount Handler
 
+Next Query uses API route handlers in the background to handle requests and perform revalidations.
+
 To handle API requests for fetches, you need to set up a route handler in your Nextjs project.
 
 Create a new file or route in your project's designated catch-all route handler. This route should handle requests for the path /api/next-query/\*
 
-`Folder Path: /app/api/next-query/[...all]/route.ts`
+`Path: /app/api/next-query/[...all]/route.ts`
 
 ```tsx
 import { revalidateTag } from "next/cache";
@@ -49,48 +54,51 @@ Start by using the `useQuery` hook in your client components. Make sure to inclu
 import { useQuery } from "@bigbang-sdk/next-query";
 
 export default function Chat() {
-  const { data, error, isLoading } = useQuery("https://example.com/");
+  const { data, error, isCacheLoading, isFreshLoading, isLoading } = useQuery("https://example.com/");
 
-  if (isLoading) return <p>Loading messages...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <p>Something went wrong</p>;
+  if (isCacheLoading) return <p>Loading messages...</p>;
 
-  return (
-    <div>
-      <ul>
-        {data?.map((msg) => (
-          <li key={msg.id}>{msg.text}</li>
-        ))}
-      </ul>
-    </div>
-  );
+  return <div>hello {data.name}</div>;
 }
 ```
 
+In this example, useQuery accepts a url to fetch.
+
+Next Query returns 5 values: `data`, `error`, `CacheLoading`, `isFreshLoading` and `isLoading`. When the request is not yet finished, `data` will be null and all loading states will be true. When we get a cached response, it sets `data` and `error` based on the result of fetch and `isCacheLoading` to false. Next Query then revalidates the cache for the query. If the fresh data is not the same as cached data, it sets `data` with the fresh data. If the fresh data is the same, it does not update `data`. Finally, both `isFreshLoading` & `isLoading` are set to false after revalidation.
+
 ## API
 
-`useQuery(url: string, options?: RequestOptions)`
+```tsx
+import { useQuery, RequestOptions } from "@bigbang-sdk/next-query";
 
-Returns an object with:
-
-| Property    | Type            | Description                                                    |
-| ----------- | --------------- | -------------------------------------------------------------- |
-| `data`      | `T \| null`     | The latest data value or `null` if none received yet.          |
-| `error`     | `Error \| null` | Any error encountered during streaming.                        |
-| `isLoading` | `boolean`       | `true` until the first chunk (or error) arrives, then `false`. |
-
-### RequestOptions
-
-This is just a wrapper around the standard [Fetch API options](https://developer.mozilla.org/docs/Web/API/Fetch_API/Using_Fetch). You can pass headers, method, body, etc. Example:
-
-```ts
-import type { RequestOptions } from "@bigbang-sdk/next-query";
-
-const opts: RequestOptions = {
+const options: RequestOptions = {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ foo: "bar" }),
 };
+
+const { data, error, isCacheLoading, isFreshLoading, isLoading } = useQuery("https://example.com/", options);
 ```
+
+### Parameters
+
+- `url`: the url for the fetch request
+- `options`: <em>(optional)</em> an object for request options
+
+### Return Values
+
+- `data`: the latest data value or `null` if none received yet
+- `error`: any error encountered during fetch
+- `isCacheLoading`: `true` until the cached data arrives, then `false`
+- `isFreshLoading`: `true` until the fresh data arrives, then `false`
+- `isLoading`: `true` until both cached and fresh data arrives, then `false`
+
+### Options
+
+- `method`: <em>(optional)</em> by default, useQuery() makes a GET request, but you can use the method option to use a different request method
+- `headers`: <em>(optional)</em> you can set the request headers for the request
+- `body`: <em>(optional)</em> you can send a body object with request inside JSON.stringify function
 
 ## Contributing
 
