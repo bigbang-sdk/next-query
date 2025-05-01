@@ -1,6 +1,6 @@
 {
   "name": "@bigbang-sdk/next-query",
-  "version": "3.0.0-dev.2",
+  "version": "3.0.0-dev.3",
   "description": "React hook for fetching data in Next.js client components using SWR",
   "keywords": [
     "nextjs",
