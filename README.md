@@ -104,7 +104,7 @@ const { data, error, isCacheLoading, isFreshLoading, isLoading } = useQuery("htt
 
 1. Fork the repository
 2. Commit your changes using [Conventional Commits](https://www.conventionalcommits.org/en) (`git commit -m "feat: add new feature"`)
-3. Open a Pull Request on the `dev` branch
+3. Open a Pull Request on the `main` branch
 
 Please open issues for bug reports or feature requests.
 
