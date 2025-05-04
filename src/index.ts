@@ -1,12 +1,10 @@
-// src/index.ts
-export function greet(name: string) {
-  return `Hello hello, ${name}!`;
-}
+// ─────────────────────────────────────────────
+// Route Handlers
+// ─────────────────────────────────────────────
+export { routeHandler } from "./lib/route-handlers/route-handler";
 
-// export * from "./lib/stream-subscriber";
-export { StreamSubscriber } from "./lib/stream/stream-subscriber";
-export { StreamEncoder } from "./lib/stream/stream-encoder";
-export { StreamProducer } from "./lib/stream/stream-producer";
-export { RequestOptions, RequestResponse } from "./lib/utils/types";
-export { useQuery } from "./lib/use-query";
-export { routeHandler } from "./lib/route-handler";
+// ─────────────────────────────────────────────
+// Query Handlers
+// ─────────────────────────────────────────────
+export { serverQuery } from "./lib/query-handlers/server-query/server-query";
+export { clientQuery } from "./lib/query-handlers/client-query/client-query";

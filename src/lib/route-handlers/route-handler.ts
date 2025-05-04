@@ -1,6 +1,5 @@
-import { fetchHandler } from "./routes/fetch-handler";
-import { parseErrorMessage } from "./utils/error";
-import { NDJSON } from "./utils/ndjson";
+import { parseErrorMessage } from "../../utils/error";
+import { streamHandler } from "./routes/stream-handler";
 
 type Handler = (req: Request) => Promise<Response>;
 
@@ -13,7 +12,8 @@ export function routeHandler(revalidateTag: (tag: string) => void) {
   const getRoutes: Record<string, Handler> = {};
 
   const postRoutes: Record<string, Handler> = {
-    fetch: (req) => fetchHandler(req, revalidateTag),
+    cache: (req) => streamHandler(req, revalidateTag, false),
+    swr: (req) => streamHandler(req, revalidateTag, true),
   };
 
   return {
@@ -36,12 +36,11 @@ async function dispatch(req: Request, table: Record<string, Handler>, method: st
   const handler = table[key];
   if (!handler) {
     const code = method === "GET" ? 405 : 404;
-    return NDJSON.errorResponse(`Endpoint not found`, code);
+    return new Response(`Endpoint not found`, { status: code });
   }
   try {
     return await handler(req);
   } catch (err: unknown) {
-    const errorMessage = parseErrorMessage(err);
-    return NDJSON.errorResponse(errorMessage, 500);
+    return new Response(parseErrorMessage(err), { status: 500 });
   }
 }
