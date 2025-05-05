@@ -29,7 +29,6 @@ jobs:
 
     # 3. Configure npm auth (only if publishing)
     - name: Configure npm Token
-      if: ${{ secrets.NPM_TOKEN }}
       run: npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
