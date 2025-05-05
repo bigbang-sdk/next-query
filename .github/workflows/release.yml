@@ -37,30 +37,37 @@ jobs:
     - name: Read package.json
       id: pkg
       run: |
-        echo "name=$(jq -r .name package.json)" >> $GITHUB_OUTPUT
-        echo "name: $name"
+        # 1. Read into a shell variable
+        name=$(jq -r .name package.json)
+
+        # 2. Export as an Action output
+        echo "name=$name" >> $GITHUB_OUTPUT
+
+        # 3. Debug-print to the console
+        echo "Package name: $name"
 
     # 5. Get latest Git tag (dev or main)
     - name: Get latest Git tag
       id: git_tag
       run: |
         branch=${GITHUB_REF##*/}
-        if [[ "$branch" == "dev" ]]; then
-          # Only look for dev prerelease tags
-          pattern='v[0-9]+.[0-9]+.[0-9]+-dev.[0-9]+'
+
+        if [ "$branch" = "dev" ]; then
+          # match any '-dev.N' prerelease
+          tag=$(git tag -l | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+-dev\.[0-9]+$' | sort -V | tail -n1)
           default='v0.0.0-dev.0'
         else
-          # Only look for clean semver tags
-          pattern='v[0-9]+.[0-9]+.[0-9]+'
+          # match any semver 'vX.Y.Z'
+          tag=$(git tag -l | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n1)
           default='v0.0.0'
         fi
 
-        # Find, sort, and pick the latest tag
-        tag=$(git tag -l "$pattern" | sort -V | tail -n1)
+        # fall back if no tags found
         tag=${tag:-$default}
 
-        # Strip leading "v" and export
-        echo "git_v=${tag#v}" >> $GITHUB_OUTPUT
+        # strip leading 'v' and export
+        git_v=${tag#v}
+        echo "git_v=$git_v" >> $GITHUB_OUTPUT
 
     # 6. Get latest npm registry version
     - name: Get latest npm version
@@ -71,7 +78,6 @@ jobs:
           || echo "0.0.0${BRANCH==dev && '-dev.0'}")
         echo "npm_v=$latest" >> $GITHUB_OUTPUT
 
-    # 7. Compute the next version
     # 7. Compute the next version
     - name: Determine new version
       id: bump
@@ -115,17 +121,16 @@ jobs:
         # — Export for downstream steps —
         echo "new_version=$new_ver" >> $GITHUB_OUTPUT
 
-
-        # 8. Create GitHub release
-        - name: Create GitHub Release
-          uses: softprops/action-gh-release@v2
-          with:
-            tag_name: "v${{ steps.bump.outputs.new_version }}"
-            name: "v${{ steps.bump.outputs.new_version }}"
-            generate_release_notes: true
-            prerelease: ${{ env.BRANCH == 'dev' }}
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # 8. Create GitHub release
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: "v${{ steps.bump.outputs.new_version }}"
+        name: "v${{ steps.bump.outputs.new_version }}"
+        generate_release_notes: true
+        prerelease: ${{ env.BRANCH == 'dev' }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     # 9. Build & publish
     - name: Build and Publish
