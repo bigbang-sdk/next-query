@@ -1,7 +1,13 @@
-[![Next Query](https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/hero-banners/hero-dark.webp)](https://query.bigbang.build/)
+<a aria-lable="Next Query" href="https://query.bigbang.build/">
+<picture>
+<source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/hero-banners/hero-dark.webp" media="(prefers-color-scheme: dark)" />
+<source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/hero-banners/hero-light.webp" media="(prefers-color-scheme: light)" />
+<img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/hero-banners/hero-light.webp" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
+</picture>
+</a>
 
 <p align="center">
-  <a aria-label="Vercel logo" href="https://query.bigbang.build/">
+  <a aria-label="Bigbang logo" href="https://query.bigbang.build/">
     <img src="https://badgen.net/badge/icon/Made%20by%20Bigbang?icon=https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/logo/logo-white.svg&label&color=black&labelColor=black">
   </a>
   <br/>

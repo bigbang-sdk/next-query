@@ -1,12 +1,9 @@
-// "use client";
 import { cn } from "@/shadcn/lib/utils";
-// import { SaveAsImage } from "@/main/wrappers/save-as-image";
 
 export default async function HomeHero() {
   const tags = ["Fast", "Lightweight", "Reusable", "SWR", "Caching", "Revalidation", "Real-time", "Pagination"];
 
   return (
-    // <SaveAsImage>
     <div className="flex flex-1 flex-col items-center border-b">
       <div className="flex flex-1 flex-col items-center justify-center overflow-hidden square-grid-bg bg-background">
         <div className="w-full flex items-center justify-center min-h-[600px] md:min-h-[500px]">
@@ -18,7 +15,6 @@ export default async function HomeHero() {
         </div>
       </div>
     </div>
-    // </SaveAsImage>
   );
 }
 
