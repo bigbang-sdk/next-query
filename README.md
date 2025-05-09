@@ -49,7 +49,7 @@ When caching is enabled, both functions utilize Next.js’s native fetch cache t
 
 By enabling access to the cache on the client, Next Query ensures instant page loads—cached data is shared across browsers, sessions, and users. Additionally, the cache enables real-time updates using the SWR (Stale-While-Revalidate) pattern.
 
-### Client Query
+### 1. Client Query
 
 Client Components, `clientQuery` can be used to fetch data in the following ways:
 
@@ -71,7 +71,7 @@ When using this pattern, the data is fetched from Next.js's native fetch cache v
 
 When using this pattern, the data is fetched from Next.js's native fetch cache and is revalidated when the component is mounted on the client.
 
-### Server Query
+### 2. Server Query
 
 Server Components, `serverQuery` can be used to fetch data in the following ways:
 
@@ -89,7 +89,7 @@ When using this pattern, the data is fetched directly from the fetch URL and is 
 
 When using this pattern, the data is fetched from Next.js's native fetch cache.
 
-### Server + Client Query
+### 3. Server + Client Query
 
 To fetch data using SWR (Stale-While-Revalidate) while leveraging both Server and Client Components, you can combine the `serverQuery` and `clientQuery` functions.
 In this pattern, the cached data is sent from the server to the client upon the page request, and when the component is mounted on the client, the data is revalidated.
