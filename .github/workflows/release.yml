@@ -103,12 +103,15 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Copy README.md to package
+      run: |
+        cp README.md package/README.md
+
     - name: Build and Publish
       working-directory: package
       run: |
         npm install
         npm run build
-        cp README.md package/README.md
         npm version ${{ steps.bump.outputs.new_version }} --no-git-tag-version
         if [[ "$BRANCH" == "dev" ]]; then
           npm publish --tag dev
