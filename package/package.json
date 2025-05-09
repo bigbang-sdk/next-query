@@ -33,7 +33,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build": "npm run clean && tsc -p tsconfig.json",
-    "pack": "npm run build && npm pack --pack-destination ../0-archives"
+    "pack": "npm run build && npm pack --pack-destination ./archive/"
   },
   "exports": {
     ".": {

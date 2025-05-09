@@ -1,11 +1,11 @@
 /**
  * Represents the state of a client-side query using NDJSON streaming or fetch.
  */
-export interface ClientQueryResponse<T = unknown> {
+export interface ClientQueryResponse {
   /**
    * The latest parsed data chunk. May be partial if only the first chunk has arrived.
    */
-  data: T | null;
+  data: any;
 
   /**
    * An error encountered during streaming or fetch.

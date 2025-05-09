@@ -3,6 +3,7 @@
 /package/bun.lockb
 /package/bun.lock
 /package/package-lock.json
+/package/archive
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
