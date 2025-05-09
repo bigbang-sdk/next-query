@@ -1,4 +1,4 @@
-import { NDJSON } from "../../utils/ndjson";
+import { NDJSON } from "../ndjson";
 
 /**
  * Streams UTF-8 text chunks as NDJSON, using a transform stream and backpressure support.

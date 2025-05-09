@@ -1,5 +1,5 @@
 import { StreamEncoder } from "./stream-encoder";
-import { parseErrorMessage } from "../../utils/error";
+import { parseErrorMessage } from "../error";
 import { RequestOptions, RequestResponse } from "../types/request";
 
 /**

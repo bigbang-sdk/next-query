@@ -1,4 +1,5 @@
 name: Release
+
 on:
   workflow_dispatch:
 
@@ -15,70 +16,51 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BRANCH: ${{ github.ref_name }}
+
     steps:
-    # 1. Checkout & fetch all history/tags
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
-    # 2. Install Node (with npm cache)
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: lts/*
 
-    # 3. Configure npm auth (only if publishing)
     - name: Configure npm Token
       run: npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-    # 4. Read package name & current version
     - name: Read package.json
       id: pkg
       run: |
-        # 1. Read into a shell variable
-        name=$(jq -r .name package.json)
-
-        # 2. Export as an Action output
+        name=$(jq -r .name package/package.json)
         echo "name=$name" >> $GITHUB_OUTPUT
-
-        # 3. Debug-print to the console
         echo "Package name: $name"
 
-    # 5. Get latest Git tag (dev or main)
     - name: Get latest Git tag
       id: git_tag
       run: |
         branch=${GITHUB_REF##*/}
-
         if [ "$branch" = "dev" ]; then
-          # match any '-dev.N' prerelease
           tag=$(git tag -l | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+-dev\.[0-9]+$' | sort -V | tail -n1)
           default='v0.0.0-dev.0'
         else
-          # match any semver 'vX.Y.Z'
           tag=$(git tag -l | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n1)
           default='v0.0.0'
         fi
-
-        # fall back if no tags found
         tag=${tag:-$default}
-
-        # strip leading 'v' and export
         git_v=${tag#v}
         echo "git_v=$git_v" >> $GITHUB_OUTPUT
 
-    # 6. Get latest npm registry version
     - name: Get latest npm version
       id: npm_tag
       run: |
         suffix=$([[ "$BRANCH" == "dev" ]] && echo "@dev" || echo "")
-        latest=$(npm view "${{ steps.pkg.outputs.name }}$suffix" version 2>/dev/null \
-          || echo "0.0.0${BRANCH==dev && '-dev.0'}")
+        latest=$(npm view "${{ steps.pkg.outputs.name }}$suffix" version 2>/dev/null || echo "0.0.0")
         echo "npm_v=$latest" >> $GITHUB_OUTPUT
 
-    # 7. Compute the next version
     - name: Determine new version
       id: bump
       run: |
@@ -86,16 +68,12 @@ jobs:
         npm_v=${{ steps.npm_tag.outputs.npm_v }}
         branch=${GITHUB_REF##*/}
 
-        # — Debug print incoming values —
         echo "git_v: $git_v"
         echo "npm_v: $npm_v"
 
-        # 1) Pick the greater of git_v vs npm_v (may include '-dev.N')
-        chosen=$(printf '%s\n%s\n' "$git_v" "$npm_v" \
-          | sort -V | tail -n1)
+        chosen=$(printf '%s\n%s\n' "$git_v" "$npm_v" | sort -V | tail -n1)
 
         if [[ "$branch" == "main" ]]; then
-          # — On main: figure bump level from commits and bump semver —
           if git log "v$git_v"..HEAD --pretty=%B | grep -qE '!:|BREAKING CHANGE'; then
             level=major
           elif git log "v$git_v"..HEAD --pretty=%s | grep -q '^feat'; then
@@ -103,11 +81,9 @@ jobs:
           else
             level=patch
           fi
-          # strip any '-dev.N' then bump
           clean_base=${chosen%%-dev.*}
           new_ver=$(npx semver -i "$level" "$clean_base")
         else
-          # — On dev: just increment the existing '-dev.N' suffix —
           prev_suffix=${chosen##*-dev.}
           prev_suffix=${prev_suffix:-0}
           next_suffix=$((prev_suffix + 1))
@@ -115,13 +91,8 @@ jobs:
           new_ver="${base}-dev.${next_suffix}"
         fi
 
-        # — Debug print the result —
-        echo "new_version: $new_ver"
-
-        # — Export for downstream steps —
         echo "new_version=$new_ver" >> $GITHUB_OUTPUT
 
-    # 8. Create GitHub release
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
       with:
@@ -132,8 +103,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # 9. Build & publish
     - name: Build and Publish
+      working-directory: package
       run: |
         npm install
         npm run build
@@ -146,9 +117,9 @@ jobs:
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-    # 10. Push version bump back to main
     - name: Commit version bump
       if: ${{ env.BRANCH == 'main' }}
+      working-directory: package
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
