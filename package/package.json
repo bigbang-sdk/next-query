@@ -1,12 +1,19 @@
 {
   "name": "@bigbang-sdk/next-query",
   "version": "4.0.0-dev.1",
-  "description": "React hook for fetching data in Next.js client components using SWR",
+  "description": "One library, multiple patterns: Next Query is a data-fetching library for Next.js that simplifies the process of retrieving data in both Server and Client Components.",
+  "homepage": "https://query.bigbang.build",
   "keywords": [
     "nextjs",
     "query",
     "react",
-    "swr"
+    "swr",
+    "javascript",
+    "typescript",
+    "js",
+    "ts",
+    "next",
+    "next-query"
   ],
   "author": "Bigbang",
   "license": "MIT",
