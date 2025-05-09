@@ -33,7 +33,7 @@ export const SvgBox = ({ x, y, width, height, stroke = "var(--color-border)", fi
         width={width}
         height={height}
         fill={fill}
-        fillOpacity={0.5}
+        fillOpacity={0.4}
         stroke={stroke}
         strokeDasharray={dashed ? 20 / 6 : undefined}
         strokeWidth={strokeWidth}

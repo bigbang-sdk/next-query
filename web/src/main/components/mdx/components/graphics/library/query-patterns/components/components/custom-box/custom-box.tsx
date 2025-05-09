@@ -30,32 +30,26 @@ export const CustomBox = ({ x: origX, y, width, height, type, x_coordinate, y_co
   };
 
   const fillColors = () => {
-    if (type === "Server")
-      return {
-        box: "var(--svg-blue-box)",
-        subtext: "var(--svg-blue-box-subtext)",
-        dashed: false,
-      };
+    if (type == "API") {
+      if (x_coordinate == 0 && y_coordinate == 0 && (patternOption == "CLIENT" || patternOption == "SERVER")) {
+        return { box: "var(--color-green-500)", dashed: false };
+      }
 
-    if (patternOption !== "BOTH") {
-      if (type === "API" && x_coordinate === 0 && y_coordinate === 0)
-        return {
-          box: "var(--svg-purple-box)",
-          subtext: "var(--svg-purple-box-subtext)",
-          dashed: false,
-        };
-      if (type === "API" && x_coordinate === 2 && y_coordinate === 0)
-        return {
-          box: "var(--svg-rose-box)",
-          subtext: "var(--svg-rose-box-subtext)",
-          dashed: false,
-        };
-    } else if (type === "API" && x_coordinate === 0 && y_coordinate === 0) {
-      return {
-        box: "var(--svg-rose-box)",
-        subtext: "var(--svg-rose-box-subtext)",
-        dashed: false,
-      };
+      if (x_coordinate == 0 && y_coordinate == 0 && patternOption == "BOTH") {
+        return { box: "var(--color-cyan-500)", dashed: false };
+      }
+
+      if (x_coordinate == 2 && y_coordinate == 0 && patternOption == "CLIENT") {
+        return { box: "var(--color-cyan-500)", dashed: false };
+      }
+    }
+
+    if (type === "Server") {
+      if (patternOption == "SERVER" && x_coordinate == 0 && y_coordinate == 2) {
+        return { box: "transparent", dashed: true, stroke: "var(--color-purple-500)" };
+      } else {
+        return { box: "var(--color-purple-500)", dashed: false };
+      }
     }
 
     if (type === "Browser") {
@@ -80,7 +74,7 @@ export const CustomBox = ({ x: origX, y, width, height, type, x_coordinate, y_co
           width={width}
           height={height}
           fill={fillColors().box}
-          stroke={fillColors().box === "transparent" ? "var(--color-border)" : fillColors().box}
+          stroke={fillColors().box === "transparent" ? (fillColors().stroke ? fillColors().stroke : "var(--color-border)") : fillColors().box}
           strokeWidth={strokeWidth}
           radius={boxRadius}
           dashed={fillColors().dashed}
@@ -89,7 +83,7 @@ export const CustomBox = ({ x: origX, y, width, height, type, x_coordinate, y_co
 
       <IconLabel x={0} y={-height / 6} type={type} x_coordinate={x_coordinate} patternOption={patternOption} />
 
-      <text x={0} y={height / 6} fill={fillColors().subtext} fontSize={subtextFontSize} textAnchor="middle" dominantBaseline="middle">
+      <text x={0} y={height / 6} fill={"var(--color-foreground)"} fontSize={subtextFontSize} textAnchor="middle" dominantBaseline="middle">
         {headerSubtext}
       </text>
     </g>

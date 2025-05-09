@@ -13,9 +13,10 @@ type T_BOX_POSITION = {
   y_coordinate: number;
 };
 
-export const BoxesStack = ({ patternOption }: { patternOption: T_PATTERN_OPTION }) => {
+export const BoxesStack = ({ patternOption, index }: { patternOption: T_PATTERN_OPTION; index: number | null }) => {
   const { CANVAS_WIDTH, HEADER_HEIGHT, BODY_HEIGHT, BOX_WIDTH, BOX_HEIGHT } = CANVAS_DEFAULTS;
-  const { GRID_VERTICAL, GRID_HORIZONTAL } = getGridProps(patternOption);
+  const { GRID_VERTICAL: DEFAULT_GRID_VERTICAL, GRID_HORIZONTAL } = getGridProps(patternOption);
+  const GRID_VERTICAL = index ? 1 : DEFAULT_GRID_VERTICAL;
   const segmentWidth = CANVAS_WIDTH / GRID_VERTICAL;
   const halfSegmentHeight = BODY_HEIGHT / GRID_HORIZONTAL / 2;
   const headerY = HEADER_HEIGHT / 2;
@@ -26,7 +27,7 @@ export const BoxesStack = ({ patternOption }: { patternOption: T_PATTERN_OPTION 
     y: headerY,
     key: `header-${i}`,
     type: "Header",
-    x_coordinate: i,
+    x_coordinate: i + (index ? index - 1 : 0),
     y_coordinate: 0,
   }));
 
@@ -37,7 +38,7 @@ export const BoxesStack = ({ patternOption }: { patternOption: T_PATTERN_OPTION 
       y: HEADER_HEIGHT + row * 2 * halfSegmentHeight + halfSegmentHeight,
       key: `body-${row}-${col}`,
       type: BOX_OPTIONS[row],
-      x_coordinate: col,
+      x_coordinate: col + (index ? index - 1 : 0),
       y_coordinate: row,
     }))
   ).flat();

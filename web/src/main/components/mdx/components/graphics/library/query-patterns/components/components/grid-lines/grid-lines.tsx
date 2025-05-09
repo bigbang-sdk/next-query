@@ -3,8 +3,9 @@ import { T_PATTERN_OPTION } from "../../props/pattern-option.types";
 import { CANVAS_DEFAULTS } from "../../utils/canvas-defaults";
 import { SvgHorizontalLine, SvgVerticalLine } from "@/main/components/svg-helpers/svg-helpers";
 
-export const GridLines = ({ patternOption }: { patternOption: T_PATTERN_OPTION }) => {
-  const { GRID_VERTICAL, GRID_HORIZONTAL } = getGridProps(patternOption);
+export const GridLines = ({ patternOption, index }: { patternOption: T_PATTERN_OPTION; index: number | null }) => {
+  const { GRID_VERTICAL: DEFAULT_GRID_VERTICAL, GRID_HORIZONTAL } = getGridProps(patternOption);
+  const GRID_VERTICAL = index ? 1 : DEFAULT_GRID_VERTICAL;
   const { CANVAS_WIDTH, CANVAS_HEIGHT, HEADER_HEIGHT, BODY_HEIGHT, SCALE } = CANVAS_DEFAULTS;
   const strokeWidth = 1 * SCALE;
 

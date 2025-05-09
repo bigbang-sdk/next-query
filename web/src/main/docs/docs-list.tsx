@@ -1,5 +1,6 @@
 export type Doc = {
   docTitle: string;
+  docSubtitle?: string;
   docSlug: string;
   docDescription?: string;
   requireCanvasProvider?: boolean;
@@ -26,6 +27,7 @@ export const docList: DocList = [
       },
       {
         docTitle: "Installation",
+        docSubtitle: "Start here",
         docSlug: "installation",
         docDescription: "How to install Next Query in your project",
       },
@@ -57,32 +59,38 @@ export const docList: DocList = [
     categorySlug: "guides",
     docs: [
       {
-        docTitle: "Server (fresh data)",
+        docTitle: "Server Query",
+        docSubtitle: "Fresh",
         docSlug: "server-fresh-data",
         docDescription: "How to fetch on server with fresh data",
       },
       {
-        docTitle: "Server (cached data)",
+        docTitle: "Server Query",
+        docSubtitle: "Cached",
         docSlug: "server-cached-data",
         docDescription: "How to fetch on server with cached data",
       },
       {
-        docTitle: "Client (fresh data)",
+        docTitle: "Client Query",
+        docSubtitle: "Fresh",
         docSlug: "client-fresh-data",
         docDescription: "How to fetch on client with fresh data",
       },
       {
-        docTitle: "Client (cached data)",
+        docTitle: "Client Query",
+        docSubtitle: "Cached",
         docSlug: "client-cached-data",
         docDescription: "How to fetch on client with cached data",
       },
       {
-        docTitle: "Client (SWR)",
+        docTitle: "Client Query",
+        docSubtitle: "SWR",
         docSlug: "client-swr",
         docDescription: "How to fetch on client with SWR",
       },
       {
-        docTitle: "Server + Client (SWR)",
+        docTitle: "Server + Client",
+        docSubtitle: "SWR",
         docSlug: "server-and-client-swr",
         docDescription: "How to fetch on server and client with SWR",
       },

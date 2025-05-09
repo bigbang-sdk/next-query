@@ -1,5 +1,16 @@
 To fetch fresh data in Server Components, use the `serverQuery` function.
 
+## Query Pattern
+
+When fetching fresh data in Server Components, the following sequence occurs:
+
+<QueryPatternsSvg patternOption="SERVER" index={1} />
+
+1. **Browser**: Sends a request to the server for the website at `https://example.com`.
+2. **Server**: Fetches fresh data from the relevant API.
+3. **Server**: Receives the response from the API and sends the rendered HTML containing the fetched data to the browser.
+4. **Browser**: Receives the response, hydrates the page, and displays the data.
+
 ## GET Request
 
 The following example fetches data on the server using a GET request.

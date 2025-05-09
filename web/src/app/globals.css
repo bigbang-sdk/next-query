@@ -46,13 +46,6 @@
   --radius-xl: calc(var(--radius) + 4px);
 
   --animate-spin: spin 1.5s linear infinite;
-
-  --svg-blue-box: var(--svg-blue-box);
-  --svg-blue-box-subtext: var(--svg-blue-box-subtext);
-  --svg-purple-box: var(--svg-purple-box);
-  --svg-purple-box-subtext: var(--svg-purple-box-subtext);
-  --svg-rose-box: var(--svg-rose-box);
-  --svg-rose-box-subtext: var(--svg-rose-box-subtext);
 }
 
 :root {
@@ -90,13 +83,6 @@
   --sidebar-ring: oklch(0.705 0.015 286.067);
 
   --subtext: var(--muted-foreground);
-
-  --svg-blue-box: var(--color-blue-500);
-  --svg-blue-box-subtext: var(--color-foreground);
-  --svg-purple-box: var(--color-purple-500);
-  --svg-purple-box-subtext: var(--color-foreground);
-  --svg-rose-box: var(--color-rose-500);
-  --svg-rose-box-subtext: var(--color-foreground);
 }
 
 .dark {

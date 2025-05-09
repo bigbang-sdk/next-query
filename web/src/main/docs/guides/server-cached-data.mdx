@@ -1,5 +1,17 @@
 To fetch cached data in Server Components, use the `serverQuery` function.
 
+## Query Pattern
+
+When fetching cached data in Server Components, the following sequence occurs:
+
+<QueryPatternsSvg patternOption="SERVER" index={2} />
+
+1. **Browser**: Sends a request to the server for the website at `https://example.com`.
+2. **Server**: Locates the cached response for the relevant API query.
+3. **Server**: Sends the rendered HTML containing the cached data to the browser.
+4. **Browser**: Receives the response, hydrates the page, and displays the data.
+5. **Server**: After responding, checks whether the cached data is stale. If so, it fetches fresh data from the API to update the cache for subsequent requests.
+
 ## GET Request
 
 The following example fetches data on the server using a GET request.

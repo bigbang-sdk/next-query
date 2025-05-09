@@ -3,6 +3,18 @@ This pattern is ideal when you want to show cached data immediately on page load
 
 Since the data is fetched on the server, it's included in the initial page load, significantly improving perceived performance.
 
+## Query Pattern
+
+When fetching data using SWR with both Server and Client Components, the following sequence occurs:
+
+<QueryPatternsSvg patternOption="BOTH" />
+
+1. **Browser**: Sends a request to the server for the website at `https://example.com`.
+2. **Server**: Retrieves the cached response for the relevant API query and returns the rendered HTML containing the cached data.
+3. **Server**: After sending the response, checks if the cached data is stale. If it is, it fetches fresh data from the API to update the cache for future requests.
+4. **Browser**: Hydrates the page with the cached data and simultaneously initiates a client-side request to fetch the latest data.
+5. **Browser**: Receives the fresh data and updates the UI accordingly.
+
 ## Start with Server Query
 
 The following example fetches data on the server using a GET request.

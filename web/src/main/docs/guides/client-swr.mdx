@@ -1,5 +1,19 @@
 To fetch data using SWR (Stale-While-Revalidate) in Client Components, use the `clientQuery` function.
 
+## Query Pattern
+
+When fetching data using SWR in Client Components, the following sequence occurs:
+
+<QueryPatternsSvg patternOption="CLIENT" index={3} />
+
+1. **Browser**: Sends a request to the server for the website at `https://example.com`.
+2. **Server**: Sends the initial HTML response to the browser.
+3. **Browser**: Hydrates the page and initiates a client-side request for data.
+4. **Server**: Returns the cached response for the relevant API query. Simultaneously, it begins fetching fresh data from the API to send next.
+5. **Browser**: Receives the cached data and displays it immediately.
+6. **Server**: Sends the fresh data from the API to the browser while updating the cache for the next requests.
+7. **Browser**: Receives the fresh data and updates the UI accordingly.
+
 ## GET Request
 
 The following example fetches data on the client using a GET request.
