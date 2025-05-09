@@ -90,7 +90,7 @@ jobs:
           base=${chosen%%-dev.*}
           new_ver="${base}-dev.${next_suffix}"
         fi
-
+        echo "new_v: $new_ver"
         echo "new_version=$new_ver" >> $GITHUB_OUTPUT
 
     - name: Create GitHub Release
@@ -108,6 +108,7 @@ jobs:
       run: |
         npm install
         npm run build
+        cp README.md package/README.md
         npm version ${{ steps.bump.outputs.new_version }} --no-git-tag-version
         if [[ "$BRANCH" == "dev" ]]; then
           npm publish --tag dev
