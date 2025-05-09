@@ -32,3 +32,35 @@ function inlineComputedStyles(node: HTMLElement) {
     inlineComputedStyles(child as HTMLElement);
   }
 }
+
+export const saveDivAsSvg = ({ divId, fileName }: { divId: string; fileName: string }) => {
+  const node = document.getElementById(divId);
+
+  if (!node) {
+    console.error(`Element #${divId} not found`);
+    return;
+  }
+
+  inlineComputedStyles(node);
+
+  // Wrap in full SVG structure if needed
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${node.offsetWidth}" height="${node.offsetHeight}">
+      <foreignObject width="100%" height="100%">
+        ${new XMLSerializer().serializeToString(node)}
+      </foreignObject>
+    </svg>
+  `;
+
+  const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.download = `${fileName}.svg`;
+  link.href = url;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url); // Clean up
+};

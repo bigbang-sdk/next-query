@@ -47,7 +47,11 @@ By enabling access to the cache on the client, Next Query ensures instant page l
 
 Client Components, `clientQuery` can be used to fetch data in the following ways:
 
-<img referrerpolicy="no-referrer-when-downgrade" src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-client-dark.webp" />
+<picture>
+  <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-client-dark.svg" media="(prefers-color-scheme: dark)" />
+    <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-client-light.svg" media="(prefers-color-scheme: light)" />
+    <img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-client-light.svg" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
+</picture>
 
 **Fresh data**
 
@@ -65,7 +69,11 @@ When using this pattern, the data is fetched from Next.js's native fetch cache a
 
 Server Components, `serverQuery` can be used to fetch data in the following ways:
 
-<img referrerpolicy="no-referrer-when-downgrade" src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-server-dark.webp" />
+<picture>
+  <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-server-dark.svg" media="(prefers-color-scheme: dark)" />
+    <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-server-light.svg" media="(prefers-color-scheme: light)" />
+    <img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-server-light.svg" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
+</picture>
 
 **Fresh data**
 
@@ -80,7 +88,11 @@ When using this pattern, the data is fetched from Next.js's native fetch cache.
 To fetch data using SWR (Stale-While-Revalidate) while leveraging both Server and Client Components, you can combine the `serverQuery` and `clientQuery` functions.
 In this pattern, the cached data is sent from the server to the client upon the page request, and when the component is mounted on the client, the data is revalidated.
 
-<img referrerpolicy="no-referrer-when-downgrade" src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-both-dark.webp" />
+<picture>
+  <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-client-dark.svg" media="(prefers-color-scheme: dark)" />
+    <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-client-light.svg" media="(prefers-color-scheme: light)" />
+    <img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-client-light.svg" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
+</picture>
 
 Since the data is fetched on the server, it's included in the initial page load, significantly improving perceived performance.
 
