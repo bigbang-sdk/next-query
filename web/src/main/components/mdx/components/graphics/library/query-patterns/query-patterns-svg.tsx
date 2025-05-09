@@ -9,28 +9,28 @@ import { SaveAsImage } from "@/main/wrappers/save-as-image";
 import { useSafeTheme } from "@/main/wrappers/theme-provider";
 
 export const QueryPatternsSvg = ({ patternOption }: { patternOption: T_PATTERN_OPTION }) => {
-  const { resolvedTheme } = useSafeTheme();
   return (
     <>
-      <SaveAsImage id={`fetch-pattern-${patternOption.toLowerCase()}-${resolvedTheme}`}>
-        <div className="relative w-full overflow-hidden border" id={`pattern-svg-${patternOption}`}>
-          <PatternSvg patternOption={patternOption} />
-        </div>
-      </SaveAsImage>
+      <div className="relative w-full overflow-hidden">
+        <PatternSvg patternOption={patternOption} />
+      </div>
     </>
   );
 };
 
 export const PatternSvg = ({ patternOption }: { patternOption: T_PATTERN_OPTION }) => {
+  const { resolvedTheme } = useSafeTheme();
   const { CANVAS_WIDTH, CANVAS_HEIGHT } = CANVAS_DEFAULTS;
 
   return (
-    <CreateSvg canvasWidth={CANVAS_WIDTH} canvasHeight={CANVAS_HEIGHT} className="w-full">
-      <GridLines patternOption={patternOption} />
+    <SaveAsImage id={`fetch-pattern-${patternOption.toLowerCase()}-${resolvedTheme}`}>
+      <CreateSvg canvasWidth={CANVAS_WIDTH} canvasHeight={CANVAS_HEIGHT}>
+        <GridLines patternOption={patternOption} />
 
-      <RequestObjects patternOption={patternOption} />
+        <RequestObjects patternOption={patternOption} />
 
-      <BoxesStack patternOption={patternOption} />
-    </CreateSvg>
+        <BoxesStack patternOption={patternOption} />
+      </CreateSvg>
+    </SaveAsImage>
   );
 };

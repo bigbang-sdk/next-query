@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react";
 import { CANVAS_DEFAULTS } from "../../utils/canvas-defaults";
 import { T_CIRCLE_PROPS } from "../../props/request-props/request-circle-props";
 
-const BASE_ICON_SIZE_STYLE = (size: number) => ({ width: `calc(var(--spacing) * ${size})`, height: `calc(var(--spacing) * ${size})` });
+const BASE_ICON_SIZE_STYLE = (size: number) => ({ width: `calc(var(--spacing) * ${size})`, height: `calc(var(--spacing) * ${size})`, color: "var(--color-foreground)" });
 
 export const RequestCircles = ({ circles }: { circles: T_CIRCLE_PROPS[] }) => {
   const { SCALE } = CANVAS_DEFAULTS;
@@ -26,7 +26,7 @@ export const RequestCircles = ({ circles }: { circles: T_CIRCLE_PROPS[] }) => {
                 ...BASE_ICON_SIZE_STYLE(circleIconSize),
               }}
             >
-              <Icon style={BASE_ICON_SIZE_STYLE(browserIconSize)} className="text-foreground" />
+              <Icon style={BASE_ICON_SIZE_STYLE(browserIconSize)} />
             </div>
           </foreignObject>
         );

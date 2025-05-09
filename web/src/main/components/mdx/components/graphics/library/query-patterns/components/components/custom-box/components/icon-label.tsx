@@ -79,8 +79,8 @@ export const IconLabel = ({ x, y, iconSize = 16, gap = 8, fontSize = 12, type, x
               style={{
                 width: `calc(var(--spacing) * ${typeIconScale})`,
                 height: `calc(var(--spacing) * ${typeIconScale})`,
+                color: "var(--color-foreground)",
               }}
-              className="text-foreground"
             />
           )}
           {type === "Header" && headerOpt.icon(typeIconScale)}

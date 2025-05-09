@@ -27,6 +27,21 @@ export const GridLines = ({ patternOption }: { patternOption: T_PATTERN_OPTION }
       {horizontalPoints().map((point, idx) => (
         <SvgHorizontalLine key={`h${idx}`} point={point} size={CANVAS_WIDTH} strokeWidth={strokeWidth} />
       ))}
+      <BorderLines />
+    </g>
+  );
+};
+
+const BorderLines = () => {
+  const { CANVAS_WIDTH, CANVAS_HEIGHT, SCALE } = CANVAS_DEFAULTS;
+  const strokeWidth = 1 * SCALE;
+
+  return (
+    <g id="border-lines">
+      <SvgVerticalLine point={0} size={CANVAS_HEIGHT} strokeWidth={strokeWidth} />
+      <SvgVerticalLine point={CANVAS_WIDTH} size={CANVAS_HEIGHT} strokeWidth={strokeWidth} />
+      <SvgHorizontalLine point={0} size={CANVAS_WIDTH} strokeWidth={strokeWidth} />
+      <SvgHorizontalLine point={CANVAS_HEIGHT} size={CANVAS_WIDTH} strokeWidth={strokeWidth} />
     </g>
   );
 };
