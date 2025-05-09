@@ -1,6 +1,6 @@
 {
   "name": "@bigbang-sdk/next-query",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "One library, multiple patterns: Next Query is a data-fetching library for Next.js that simplifies the process of retrieving data in both Server and Client Components.",
   "homepage": "https://query.bigbang.build",
   "keywords": [
