@@ -6,10 +6,10 @@ import { T_CIRCLE_PROPS } from "../../props/request-props/request-circle-props";
 const BASE_ICON_SIZE_STYLE = (size: number) => ({ width: `calc(var(--spacing) * ${size})`, height: `calc(var(--spacing) * ${size})`, color: "var(--color-foreground)" });
 
 export const RequestCircles = ({ circles }: { circles: T_CIRCLE_PROPS[] }) => {
-  const { SCALE } = CANVAS_DEFAULTS;
-  const browserIconSize = 4 * SCALE;
-  const circleIconSize = 5 * SCALE;
-  const boundingBoxSize = browserIconSize * 6;
+  const { CIRCLE_ICON_SIZE } = CANVAS_DEFAULTS;
+  const browserIconSize = CIRCLE_ICON_SIZE.BROWSER;
+  const circleIconSize = CIRCLE_ICON_SIZE.CIRCLE;
+  const boundingBoxSize = CIRCLE_ICON_SIZE.BOUNDING_BOX;
 
   return (
     <g>

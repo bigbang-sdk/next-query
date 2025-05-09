@@ -95,9 +95,9 @@ To fetch data using SWR (Stale-While-Revalidate) while leveraging both Server an
 In this pattern, the cached data is sent from the server to the client upon the page request, and when the component is mounted on the client, the data is revalidated.
 
 <picture>
-  <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-client-dark.svg" media="(prefers-color-scheme: dark)" />
-    <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-client-light.svg" media="(prefers-color-scheme: light)" />
-    <img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-client-light.svg" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
+  <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-both-dark.svg" media="(prefers-color-scheme: dark)" />
+    <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-both-light.svg" media="(prefers-color-scheme: light)" />
+    <img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-both-light.svg" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
 </picture>
 
 Since the data is fetched on the server, it's included in the initial page load, significantly improving perceived performance.
