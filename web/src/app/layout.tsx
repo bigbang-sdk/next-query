@@ -7,8 +7,8 @@ import { Header } from "@/main/components/header/header";
 import { Footer } from "@/main/components/footer/footer";
 
 export const metadata: Metadata = {
-  title: "Next Query / Bigbang",
-  description: "Next Query",
+  title: "Next Query",
+  description: "One library, multiple patterns: Next Query is a data-fetching library for Next.js that simplifies the process of retrieving data in both Server and Client Components.",
 };
 
 export default function RootLayout({

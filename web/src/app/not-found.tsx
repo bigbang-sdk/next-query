@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/shadcn/lib/utils";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "404 / Next Query",
+};
 
 export default function NotFound() {
   const titleClass = "text-[8rem] font-bold";

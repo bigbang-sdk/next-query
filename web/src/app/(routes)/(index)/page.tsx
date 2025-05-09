@@ -1,6 +1,11 @@
 import "@/main/css/index.css";
 import HomeHero from "./_components/hero/hero";
 import { HomeMain } from "./_components/main/main";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home / Next Query",
+};
 
 export default async function Home() {
   return (

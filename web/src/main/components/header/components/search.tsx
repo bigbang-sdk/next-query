@@ -17,7 +17,7 @@ const Search = () => {
         onClick={() => setSearchOpen(true)}
       >
         <SearchIcon className="w-[1.2rem] h-[1.2rem] md:w-3.5 md:h-3.5" />
-        <p className="text-sm hidden md:block">Search</p>
+        <span className="text-sm hidden md:block">Search</span>
       </div>
       <SearchBox open={searchOpen} setOpen={setSearchOpen} />
     </>

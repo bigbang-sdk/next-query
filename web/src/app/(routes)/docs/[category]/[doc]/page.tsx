@@ -2,11 +2,23 @@ import { Loading } from "@/main/components/loading/loading";
 import { TableOfContents } from "./_components/table-of-contents";
 import { loadMdx } from "./_utils/mdx-loader";
 import { Suspense } from "react";
-import { allDocsPaths, Doc } from "@/main/docs/docs-list";
+import { allDocsPaths, Doc, docList } from "@/main/docs/docs-list";
 import { notFound } from "next/navigation";
 import { Content } from "./_components/content";
 import { HighlightThemeLoader } from "./_utils/theme-loader";
 import { Dock } from "../../_components/dock/dock";
+import { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ category: string; doc: string }> }): Promise<Metadata> {
+  const { category, doc } = await params;
+
+  const docCategory = docList.find((item) => item.categorySlug === category);
+  const docItem = docCategory?.docs.find((item) => item.docSlug === doc);
+
+  return {
+    title: docCategory && docItem ? `${docCategory.categoryTitle}: ${docItem.docTitle} / Next Query` : "Docs /Next Query",
+  };
+}
 
 export async function generateStaticParams() {
   const filePaths = allDocsPaths();

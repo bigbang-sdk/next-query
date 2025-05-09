@@ -1,115 +1,104 @@
-# Introduction
+[![Next Query](https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/hero-banners/hero-dark.webp)](https://query.bigbang.build/)
 
-**Next Query** is a React hook for fetching data in Next.js client components using SWR (Stale-While-Revalidate), leveraging Next.js’s built-in fetch cache.
+<p align="center">
+  <a aria-label="Vercel logo" href="https://query.bigbang.build/">
+    <img src="https://badgen.net/badge/icon/Made%20by%20Bigbang?icon=https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/logo/logo-white.svg&label&color=black&labelColor=black">
+  </a>
+  <br/>
+  <a aria-label="NPM version" href="https://www.npmjs.com/package/@bigbang-sdk/next-query">
+    <img alt="" src="https://badgen.net/npm/v/@bigbang-sdk/next-query?&labelColor=black">
+  </a>
+  <a aria-label="Package size" href="https://bundlephobia.com/result?p=@bigbang-sdk/next-query">
+    <img alt="" src="https://badgen.net/bundlephobia/minzip/@bigbang-sdk/next-query?&labelColor=black">
+  </a>
+  <a aria-label="License" href="https://github.com/bigbang-sdk/next-query/blob/main/package/LICENSE">
+    <img alt="" src="https://badgen.net/npm/license/@bigbang-sdk/next-query?&labelColor=black">
+  </a>
+</p>
 
-When a request is made through Next Query, the client immediately receives a **cached response**. Then, Next Query automatically **revalidates** the data by fetching a **fresh response** in the background.
+<p align="center">
+  <a href="https://query.bigbang.build/"><strong>Website</strong></a> /
+  <a href="https://query.bigbang.build/docs"><strong>Documentation</strong></a> /
+  <a href="https://www.npmjs.com/package/@bigbang-sdk/next-query"><strong>NPM</strong></a>
+</p>
 
-With a single hook, you can now use Next.js’s built-in fetch cache—previously available only in Server Components—within Client Components as well.
+## Introduction
 
-- **Fast**, **lightweight** and **reusable** data fetching
-- Leverages Next.js's built-in fetch **cache**
-- **Real-time** experience
-- Automatic Revalidation
-- TypeScript
+Next Query is a data-fetching library for Next.js that simplifies the process of retrieving data in both Server and Client Components.
 
-## Installation
+Built on top of Next.js’s built-in fetch cache, Next Query focuses on delivering a seamless, clutter-free experience. It abstracts away the complexities of data fetching—such as caching, revalidation, and SWR (Stale-While-Revalidate)—so you can focus on building your application.
 
-### 1. Install the Package
+- Fast, lightweight, and reusable data fetching
+- Built-in support for SWR (Stale-While-Revalidate)
+- Automatic caching and revalidation
+- Real-time-ready experience
+- Powered by Next.js’s native fetch cache
+- Fully typed with TypeScript support
 
-Start by adding Next Query to your project:
+## One Library, Multiple Patterns
 
-```bash
-npm install @bigbang-sdk/next-query
-# or
-yarn add @bigbang-sdk/next-query
-# or
-bun add @bigbang-sdk/next-query
-```
+Next Query provides two core functions: clientQuery and serverQuery. These functions can be used in different ways to support a variety of data fetching patterns.
 
-### 2. Mount Handler
+When caching is enabled, both functions utilize Next.js’s native fetch cache to store and retrieve data. However, while this cache is natively available in Server Components, it is not accessible in Client Components. To bridge this gap, clientQuery uses API route handlers to access the server-side cache from the client.
 
-Next Query uses API route handlers in the background to handle requests and perform revalidations.
+By enabling access to the cache on the client, Next Query ensures instant page loads—cached data is shared across browsers, sessions, and users. Additionally, the cache enables real-time updates using the SWR (Stale-While-Revalidate) pattern.
 
-To handle API requests for fetches, you need to set up a route handler in your Nextjs project.
+### Client Query
 
-Create a new file or route in your project's designated catch-all route handler. This route should handle requests for the path /api/next-query/\*
+Client Components, `clientQuery` can be used to fetch data in the following ways:
 
-`Path: /app/api/next-query/[...all]/route.ts`
+<img referrerpolicy="no-referrer-when-downgrade" src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-client-dark.webp" />
 
-```tsx
-import { revalidateTag } from "next/cache";
-import { routeHandler } from "@bigbang-sdk/next-query";
+**Fresh data**
 
-export const { GET, POST } = routeHandler(revalidateTag);
-```
+When using this pattern, the data is fetched directly from the fetch URL and is not cached.
 
-## Usage
+**Cached data**
 
-Start by using the `useQuery` hook in your client components. Make sure to include "use client" at the top of your file.
+When using this pattern, the data is fetched from Next.js's native fetch cache via an API route handler.
 
-`data` will update twice: first with cached data, and then with fresh data.
+**SWR**
 
-```tsx
-"use client";
-import { useQuery } from "@bigbang-sdk/next-query";
+When using this pattern, the data is fetched from Next.js's native fetch cache and is revalidated when the component is mounted on the client.
 
-export default function Chat() {
-  const { data, error, isCacheLoading, isFreshLoading, isLoading } = useQuery("https://example.com/");
+### Server Query
 
-  if (error) return <p>Something went wrong</p>;
-  if (isCacheLoading) return <p>Loading messages...</p>;
+Server Components, `serverQuery` can be used to fetch data in the following ways:
 
-  return <div>hello {data.name}</div>;
-}
-```
+<img referrerpolicy="no-referrer-when-downgrade" src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-server-dark.webp" />
 
-In this example, useQuery accepts a url to fetch.
+**Fresh data**
 
-Next Query returns 5 values: `data`, `error`, `CacheLoading`, `isFreshLoading` and `isLoading`. When the request is not yet finished, `data` will be null and all loading states will be true. When we get a cached response, it sets `data` and `error` based on the result of fetch and `isCacheLoading` to false. Next Query then revalidates the cache for the query. If the fresh data is not the same as cached data, it sets `data` with the fresh data. If the fresh data is the same, it does not update `data`. Finally, both `isFreshLoading` & `isLoading` are set to false after revalidation.
+When using this pattern, the data is fetched directly from the fetch URL and is not cached.
 
-## API
+#### Cached data
 
-```tsx
-import { useQuery, RequestOptions } from "@bigbang-sdk/next-query";
+When using this pattern, the data is fetched from Next.js's native fetch cache.
 
-const options: RequestOptions = {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ foo: "bar" }),
-};
+### Server + Client Query
 
-const { data, error, isCacheLoading, isFreshLoading, isLoading } = useQuery("https://example.com/", options);
-```
+To fetch data using SWR (Stale-While-Revalidate) while leveraging both Server and Client Components, you can combine the `serverQuery` and `clientQuery` functions.
+In this pattern, the cached data is sent from the server to the client upon the page request, and when the component is mounted on the client, the data is revalidated.
 
-### Parameters
+<img referrerpolicy="no-referrer-when-downgrade" src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-both-dark.webp" />
 
-- `url`: the url for the fetch request
-- `options`: <em>(optional)</em> an object for request options
-
-### Return Values
-
-- `data`: the latest data value or `null` if none received yet
-- `error`: any error encountered during fetch
-- `isCacheLoading`: `true` until the cached data arrives, then `false`
-- `isFreshLoading`: `true` until the fresh data arrives, then `false`
-- `isLoading`: `true` until both cached and fresh data arrives, then `false`
-
-### Options
-
-- `method`: <em>(optional)</em> by default, useQuery() makes a GET request, but you can use the method option to use a different request method
-- `headers`: <em>(optional)</em> you can set the request headers for the request
-- `body`: <em>(optional)</em> you can send a body object with request inside JSON.stringify function
+Since the data is fetched on the server, it's included in the initial page load, significantly improving perceived performance.
 
 ## Contributing
 
-1. Fork the repository
-2. Commit your changes using [Conventional Commits](https://www.conventionalcommits.org/en) (`git commit -m "feat: add new feature"`)
-3. Open a Pull Request on the `main` branch
+We welcome contributions! To get started:
 
-Please open issues for bug reports or feature requests.
+1. Fork the repository on [GitHub](https://github.com/bigbang-sdk/next-query)
+2. Commit your changes using [Conventional Commits](https://www.conventionalcommits.org/en)
+
+```bash
+git commit -m "feat: add new feature"
+```
+
+3. Open a Pull Request targeting the `main` branch.
+
+If you encounter bugs or have feature suggestions, please open an issue.
 
 ## License
 
-This project is [MIT Licensed](LICENSE).
-
-test2
+This project is licensed under the [MIT License](https://github.com/bigbang-sdk/next-query/blob/main/LICENSE).
