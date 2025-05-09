@@ -1,0 +1,51 @@
+To install Next Query in your project, follow these steps:
+
+## 1. Install the package
+
+Begin by adding Next Query to your project:
+
+<TabsCodeBlock defaultValue="npm" tsLogo={false}>
+  <TabItem value="npm" label="npm">
+     ```bash 
+    npm install next-query 
+    ```
+
+  </TabItem>
+  <TabItem value="yarn" label="yarn">
+    ```bash 
+    yarn add next-query
+    ```
+  </TabItem>
+
+    <TabItem value="pnpm" label="pnpm">
+    ```bash
+    pnpm add next-query
+    ```
+    </TabItem>
+
+  <TabItem value="bun" label="bun">
+    ```bash
+    bun add next-query
+    ```
+  </TabItem>
+</TabsCodeBlock>
+
+## 2. Mount handler
+
+Next Query uses API route handlers under the hood to process requests and handle revalidations.
+
+To enable this, you need to set up a catch-all route handler in your Next.js project to handle API requests made by Next Query.
+
+Create a new file in your project to match the route /api/next-query/\*_/_. This route will handle all fetch requests from Next Query.
+
+<TabsCodeBlock defaultValue="component">
+  <TabItem value="component" label="/app/api/next-query/[...all]/route.ts">
+    ```tsx
+    import { revalidateTag } from "next/cache";
+    import { routeHandler } from "@bigbang-sdk/next-query";
+
+    export const { GET, POST } = routeHandler(revalidateTag);
+    ```
+
+  </TabItem>
+</TabsCodeBlock>

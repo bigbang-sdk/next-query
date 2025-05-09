@@ -1,0 +1,56 @@
+.bg-tag-0 {
+  background-color: var(--color-blue-500);
+  background-color: color-mix(in srgb, var(--color-blue-500), transparent 50%);
+  border-color: var(--color-blue-500);
+}
+
+.bg-tag-1 {
+  background-color: var(--color-red-500);
+  background-color: color-mix(in srgb, var(--color-red-500), transparent 50%);
+  border-color: var(--color-red-500);
+}
+
+.bg-tag-2 {
+  background-color: var(--color-lime-500);
+  background-color: color-mix(in srgb, var(--color-lime-500), transparent 50%);
+  border-color: var(--color-lime-500);
+}
+
+.bg-tag-3 {
+  background-color: var(--color-yellow-500);
+  background-color: color-mix(in srgb, var(--color-yellow-500), transparent 50%);
+  border-color: var(--color-yellow-500);
+}
+
+.bg-tag-4 {
+  background-color: var(--color-purple-500);
+  background-color: color-mix(in srgb, var(--color-purple-500), transparent 50%);
+  border-color: var(--color-purple-500);
+}
+
+.bg-tag-5 {
+  background-color: var(--color-pink-500);
+  background-color: color-mix(in srgb, var(--color-pink-500), transparent 50%);
+  border-color: var(--color-pink-500);
+}
+
+.bg-tag-6 {
+  background-color: var(--color-cyan-500);
+  background-color: color-mix(in srgb, var(--color-cyan-500), transparent 50%);
+  border-color: var(--color-cyan-500);
+}
+
+.bg-tag-7 {
+  background-color: var(--color-orange-500);
+  background-color: color-mix(in srgb, var(--color-orange-500), transparent 50%);
+  border-color: var(--color-orange-500);
+}
+
+.square-grid-bg {
+  width: 100vw;
+  height: 100vh;
+  background-image: repeating-linear-gradient(0deg, var(--color-border) 0px, var(--color-border) 1px, transparent 1px, transparent 104px),
+    repeating-linear-gradient(90deg, var(--color-border) 0px, var(--color-border) 1px, transparent 1px, transparent 104px);
+  background-size: 104px 104px;
+  background-position: center;
+}

@@ -1,0 +1,53 @@
+Next Query allows you to fetch data in both Server and Client Components in Next.js.
+You can retrieve cached data, or fetch fresh data.
+
+Here's how to quickly get started with data fetching using Next Query.
+
+## Server Query
+
+Use `serverQuery` inside a Server Component to fetch data directly from the server:
+
+<TabsCodeBlock defaultValue="server-component">
+  <TabItem value="server-component" label="Server Component">
+    ```tsx
+    import { serverQuery } from "@bigbang-sdk/next-query";
+
+    async function ServerComponent() {
+      const { data, error } = await serverQuery({
+            queryUrl: "https://api.example.com/data",
+            queryCache: true
+          });
+
+      console.log(data, error);
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>
+
+The code above fetches data on the server using Next.js's built-in fetch cache.
+
+## Client Query
+
+Use `clientQuery` inside a Client Component when you need to fetch data on the client side.
+
+<TabsCodeBlock defaultValue="client-component">
+  <TabItem value="client-component" label="Client Component">
+    ```tsx
+    "use client";
+    import { clientQuery } from "@bigbang-sdk/next-query";
+
+    function ClientComponent() {
+        const { data, error, isLoading } = clientQuery({
+            queryUrl: "https://api.example.com/data",
+            queryCache: true
+        });
+
+        console.log(data, error, isLoading);
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>
+
+The code above will fetch data on the client using the Next.js's API route handler.

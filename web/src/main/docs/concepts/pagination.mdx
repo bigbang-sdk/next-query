@@ -1,0 +1,78 @@
+`Next Query` supports pagination out of the box on both Server and Client Components.
+
+Both `serverQuery` and `clientQuery` functions accept a `queryUrl` parameter, which is the URL of the API endpoint to fetch data from.
+
+The `queryUrl` parameter can include query parameters like `page`, `limit`, etc.
+
+## Server Query
+
+In order to paginate data on the server, you can use the `serverQuery` function.
+
+<TabsCodeBlock defaultValue="server-component">
+  <TabItem value="server-component" label="Server Component">
+    ```tsx
+    import { serverQuery } from "@bigbang-sdk/next-query";
+    import Link from "next/link";
+
+    type SearchParams = {
+        page: string;
+    }
+
+    async function ServerComponent({searchParams}: {searchParams: Promise<SearchParams>}) {
+        const { page } = await searchParams;
+
+        const { data, error } = await serverQuery({
+            queryUrl: "https://api.example.com/data" + `?page=${page}`,
+          });
+
+        if (error) {
+            return <div>Error: {error.message}</div>
+        }
+
+        return (
+            <div>
+                <h1>{data}</h1>
+                <Link href={`/posts?page=${page + 1}`}>Next</Link>
+            </div>
+        )
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>
+
+## Client Query
+
+In order to paginate data on the client, you can use the `clientQuery` function.
+
+<TabsCodeBlock defaultValue="client-component">
+  <TabItem value="client-component" label="Client Component">
+    ```tsx
+    import { clientQuery } from "@bigbang-sdk/next-query";
+
+    function ClientComponent() {
+        const [page, setPage] = useState(1);
+
+        const { data, error, isLoading } = clientQuery({
+            queryUrl: "https://api.example.com/data" + `?page=${page}`,
+        });
+
+        return (
+            <div>
+                <div>
+                    {data.map((item) => (
+                        <div key={item.id}>{item.name}</div>
+                    ))}
+                </div>
+                {isLoading ? (
+                    <div>Loading...</div>
+                ) : (
+                    <button onClick={() => setPage(page + 1)}>Load More</button>
+                )}
+            </div>
+        )
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>

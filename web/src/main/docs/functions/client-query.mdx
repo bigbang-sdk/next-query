@@ -1,0 +1,121 @@
+`clientQuery` is a client-side function that fetches data from a URL. The function accepts `queryUrl`, `queryOptions` and `queryCache` as parameters, and returns
+with `data`, `error`, and loading properties.
+
+## Fetching Strategies
+
+`clientQuery` supports three different fetching strategies:
+
+- `"fresh"` — fetches fresh data
+- `"cached"` — fetches cached data
+- `"swr"` — fetches cached + fresh data
+
+## API Reference
+
+Use `clientQuery` in a client component using the following format:
+
+<TabsCodeBlock defaultValue="client-component">
+  <TabItem value="client-component" label="Client Component">
+    ```tsx
+    "use client";
+    import { clientQuery } from "@bigbang-sdk/next-query";
+
+    function ClientComponent() {
+        const { data, error, isLoading } = clientQuery({
+            // required
+            queryUrl: "https://api.example.com/data",
+            // optional, defaults to "GET"
+            queryOptions: {
+              method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ foo: "bar" }),
+            },
+            // optional, defaults to false
+            queryCache: true,
+            // or queryCache: false,
+            // or queryCache: "swr",
+            // or queryCache: { tags: ["user","profile"], revalidate: 60 },
+        });
+
+        console.log(data, error, isLoading);
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>
+
+### Parameters
+
+`clientQuery` accepts the following parameters:
+
+```ts
+type ClientQueryProps = {
+  queryUrl: string;
+  queryOptions: RequestInit;
+  queryCache: boolean | CacheProps;
+};
+```
+
+| Parameter      | Type                           | Description                              |
+| -------------- | ------------------------------ | ---------------------------------------- |
+| `queryUrl`     | `string`                       | The URL to fetch.                        |
+| `queryOptions` | `RequestInit`                  | The options for the fetch request.       |
+| `queryCache`   | `boolean / "swr" / cacheProps` | The cache options for the fetch request. |
+
+#### queryOptions
+
+`queryOptions` is an object that contains the options for the fetch request.
+
+```ts
+type QueryOptions = {
+  method: string;
+  headers: Record<string, string>;
+  body: string;
+};
+```
+
+| Parameter | Type     | Description                           |
+| --------- | -------- | ------------------------------------- |
+| `method`  | `string` | The HTTP method to use.               |
+| `headers` | `Record` | The headers to send with the request. |
+| `body`    | `string` | The body to send with the request.    |
+
+#### queryCache
+
+`queryCache` is used to specify the cache options for the fetch request.
+
+```ts
+type QueryCache =
+  | boolean
+  | "swr"
+  | {
+      tags: string[];
+      revalidate: number;
+    };
+```
+
+It can be a boolean, the string `"swr"` or an object with the following properties:
+
+| Parameter    | Type       | Description                                                 |
+| ------------ | ---------- | ----------------------------------------------------------- |
+| `tags`       | `string[]` | The tags to use for the cache.                              |
+| `revalidate` | `number`   | The number of seconds before the cache is considered stale. |
+
+### Return Values
+
+```tsx
+type ClientQueryReturn = {
+  data: any;
+  error: Error | null;
+  isCacheLoading: boolean;
+  isFreshLoading: boolean;
+  isLoading: boolean;
+};
+```
+
+| Parameter        | Type           | Description                                                                                                      |
+| ---------------- | -------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `data`           | `any`          | The data returned from the fetch.                                                                                |
+| `error`          | `Error / null` | The error returned from the fetch.                                                                               |
+| `isCacheLoading` | `boolean`      | applicable only in `"swr"` mode. `true` until the first (cached) data arrives.                                   |
+| `isFreshLoading` | `boolean`      | applicable only in `"swr"` mode. `true` until the second (fresh) data arrives.                                   |
+| `isLoading`      | `boolean`      | in `"swr"` mode, `true` until both cached and fresh data have arrived. Otherwise, `true` until the data arrives. |

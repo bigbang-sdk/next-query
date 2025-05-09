@@ -1,0 +1,57 @@
+In order to achieve infinite queries, you can use the `clientQuery` function on Client Components.
+
+The `clientQuery` function accepts a `queryUrl` parameter, which is the URL of the API endpoint to fetch data from.
+
+The `queryUrl` parameter can include query parameters like `page`, `limit`, etc.
+
+## Client Query
+
+<TabsCodeBlock defaultValue="client-component">
+  <TabItem value="client-component" label="Client Component">
+
+    ```tsx
+    import { clientQuery } from "@bigbang-sdk/next-query";
+
+    function ClientComponent() {
+        const [page, setPage] = useState(1);
+        const [hasMore, setHasMore] = useState(true);
+        const [allData, setAllData] = useState([]);
+
+        const { data, error, isLoading } = clientQuery({
+            queryUrl: "https://api.example.com/data" + `?page=${page}`,
+        });
+
+        useEffect(() => {
+            if (data.length > 0) {
+                setAllData([...allData, ...data.data]);
+                setHasMore(data.hasMore);
+            }
+        }, [data]);
+
+        const loadMore = () => {
+            if (hasMore) {
+                setPage(page + 1);
+            }
+        }
+
+        return (
+            <div>
+                <div>
+                    {allData.map((item) => (
+                        <div key={item.id}>{item.name}</div>
+                    ))}
+                </div>
+                {isLoading ? (
+                    <div>Loading...</div>
+                ) : (
+                    hasMore && (
+                        <button onClick={loadMore}>Load More</button>
+                    )
+                )}
+            </div>
+        )
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>

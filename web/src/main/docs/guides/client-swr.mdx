@@ -1,0 +1,54 @@
+To fetch data using SWR (Stale-While-Revalidate) in Client Components, use the `clientQuery` function.
+
+## GET Request
+
+The following example fetches data on the client using a GET request.
+The data is initially set with the cached response, and then automatically updated with the fresh data once it's fetched.
+
+<TabsCodeBlock defaultValue="client-component">
+  <TabItem value="client-component" label="Client Component">
+    ```tsx
+    "use client";
+    import { clientQuery } from "@bigbang-sdk/next-query";
+
+    function ClientComponent() {
+        const { data, error, isLoading, isCacheLoading, isFreshLoading } = clientQuery({
+            queryUrl: "https://api.example.com/data",
+            queryCache: "swr"
+        });
+
+        console.log(data, error, isLoading, isCacheLoading, isFreshLoading);
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>
+
+## POST Request
+
+The following example fetches data on the client using a POST request.
+The data is initially set with the cached response, and then automatically updated with the fresh data once it's fetched.
+
+<TabsCodeBlock defaultValue="client-component">
+  <TabItem value="client-component" label="Client Component">
+    ```tsx
+    "use client";
+    import { clientQuery } from "@bigbang-sdk/next-query";
+
+    function ClientComponent() {
+      const { data, error, isLoading, isCacheLoading, isFreshLoading } = clientQuery({
+            queryUrl: "https://api.example.com/data",
+            queryOptions: {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ foo: "bar" }),
+            },
+            queryCache: "swr"
+          });
+
+      console.log(data, error, isLoading, isCacheLoading, isFreshLoading);
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>

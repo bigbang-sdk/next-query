@@ -1,0 +1,61 @@
+To fetch data using SWR (Stale-While-Revalidate) while leveraging both Server and Client Components, you can combine the `serverQuery` and `clientQuery` functions.
+This pattern is ideal when you want to show cached data immediately on page load, then seamlessly update it with fresh data on the client.
+
+Since the data is fetched on the server, it's included in the initial page load, significantly improving perceived performance.
+
+## Start with Server Query
+
+The following example fetches data on the server using a GET request.
+The returned data is then passed as initial data to the `ClientComponent`.
+
+<TabsCodeBlock defaultValue="server-component">
+  <TabItem value="server-component" label="Server Component">
+    ```tsx
+    import { serverQuery } from "@bigbang-sdk/next-query";
+
+    async function ServerComponent() {
+        const { data, error } = await serverQuery({
+            queryUrl: "https://api.example.com/data",
+        });
+
+        return (
+            <ClientComponent initialData={data} />
+        )
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>
+
+## Revalidate on Client
+
+The following example receives `initialData` as props from the `ServerComponent` and then fetches fresh data on the client using `clientQuery`.
+
+<TabsCodeBlock defaultValue="client-component">
+  <TabItem value="client-component" label="Client Component">
+    ```tsx
+    "use client";
+    import { useState, useEffect } from "react";
+    import { clientQuery } from "@bigbang-sdk/next-query";
+
+    function ClientComponent({ initialData }: { initialData: any }) {
+      const [fetchedData, setFetchedData] = useState(initialData);
+
+      const { data, error, isLoading } = clientQuery({
+            queryUrl: "https://api.example.com/data"
+          });
+
+      useEffect(() => {
+        setFetchedData(data);
+      }, [data]);
+
+      return (
+        <div>
+          <p>{fetchedData}</p>
+        </div>
+      )
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>

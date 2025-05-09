@@ -1,0 +1,97 @@
+When data is fetched in `Next Query` with caching enabled, it is stored on the server using Next.js's internal cache.
+
+## How revalidation works
+
+Each query that opts into caching will be stored on the server. By default, the cached data is considered fresh for 60 seconds.
+After this period, the data is marked as stale.
+
+When the same query is requested again, the cached data is returned. If the data is stale, it will be revalidated in the background.
+On your next request, the updated (fresh) data will be served.
+
+<TabsCodeBlock defaultValue="server-query">
+  <TabItem value="server-query" label="Server Query">
+    ```tsx
+      const { data, error } = await serverQuery({
+        queryUrl: "https://api.example.com/data",
+        queryCache: true
+      });
+    ```
+  </TabItem>
+  <TabItem value="client-query" label="Client Query">
+    ```tsx
+      const { data, error, isLoading } = clientQuery({
+        queryUrl: "https://api.example.com/data",
+        queryCache: true
+      });
+    ```
+  </TabItem>
+</TabsCodeBlock>
+
+In the example above, since `queryCache` is set to true, the default revalidation time of 60 seconds will apply.
+
+## Setting a custom revalidation time
+
+You can specify a custom revalidation interval by passing a number (in seconds) to the `revalidate` parameter.
+
+In the example below, the revalidation time is set to 120 seconds:
+
+<TabsCodeBlock defaultValue="server-query">
+  <TabItem value="server-query" label="Server Query">
+    ```tsx
+      const { data, error } = await serverQuery({
+        queryUrl: "https://api.example.com/data",
+        queryCache: {
+          revalidate: 120,
+        },
+      });
+    ```
+  </TabItem>
+  <TabItem value="client-query" label="Client Query">
+    ```tsx
+      const { data, error, isLoading } = clientQuery({
+        queryUrl: "https://api.example.com/data",
+        queryCache: {
+          revalidate: 120,
+        },
+      });
+    ```
+  </TabItem>
+</TabsCodeBlock>
+
+## Manual revalidation
+
+You can manually revalidate a query using the revalidateTag function from Next.js's internal next/cache module.
+This function accepts a tag string and will revalidate all queries associated with that tag.
+
+There are two common ways to use revalidateTag: within an API Route or inside a Server Action.
+
+### API Route
+
+A tag can be revalidated by passing the tag as a query parameter to the API route.
+
+```tsx
+import { revalidateTag } from "next/cache";
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const tag = searchParams.get("tag");
+
+  revalidateTag(tag);
+
+  return new Response("Revalidated", { status: 200 });
+}
+```
+
+### Server Action
+
+A tag can be revalidated by passing the tag as an argument to the server action.
+
+```tsx
+"use server";
+import { revalidateTag } from "next/cache";
+
+export async function revalidateTagAction(tag: string) {
+  revalidateTag(tag);
+  return { success: true };
+}
+```

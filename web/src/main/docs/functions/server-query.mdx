@@ -1,0 +1,111 @@
+`serverQuery` is a server-side function that fetches data from a URL. The function accepts `queryUrl`, `queryOptions` and `queryCache` as parameters, and returns
+with `data` and `error` properties.
+
+## Fetching Strategies
+
+`serverQuery` supports two different fetching strategies:
+
+- `"fresh"` — fetches fresh data
+- `"cached"` — fetches cached data
+
+## API Reference
+
+Use `serverQuery` in a server component using the following format:
+
+<TabsCodeBlock defaultValue="server-component">
+  <TabItem value="server-component" label="Server Component">
+    ```ts
+    import { serverQuery } from "@bigbang-sdk/next-query";
+
+    async function ServerComponent() {
+      const { data, error } = await serverQuery({
+            // required
+            queryUrl: "https://api.example.com/data",
+            // optional, defaults to "GET"
+            queryOptions: {
+              method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ foo: "bar" }),
+            },
+            // optional, defaults to false
+            queryCache: true,
+            // or queryCache: false,
+            // or queryCache: { tags: ["user","profile"], revalidate: 60 },
+          });
+
+      console.log(data, error);
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>
+
+### Parameters
+
+`serverQuery` accepts the following parameters:
+
+```ts
+type ServerQueryProps = {
+  queryUrl: string;
+  queryOptions: RequestInit;
+  queryCache: boolean | CacheProps;
+};
+```
+
+| Parameter      | Type                   | Description                              |
+| -------------- | ---------------------- | ---------------------------------------- |
+| `queryUrl`     | `string`               | The URL to fetch.                        |
+| `queryOptions` | `RequestInit`          | The options for the fetch request.       |
+| `queryCache`   | `boolean / cacheProps` | The cache options for the fetch request. |
+
+#### queryOptions
+
+`queryOptions` is an object that contains the options for the fetch request.
+
+```ts
+type QueryOptions = {
+  method: string;
+  headers: Record<string, string>;
+  body: string;
+};
+```
+
+| Parameter | Type     | Description                           |
+| --------- | -------- | ------------------------------------- |
+| `method`  | `string` | The HTTP method to use.               |
+| `headers` | `Record` | The headers to send with the request. |
+| `body`    | `string` | The body to send with the request.    |
+
+#### queryCache
+
+`queryCache` is used to specify the cache options for the fetch request.
+
+```ts
+type QueryCache =
+  | boolean
+  | {
+      tags: string[];
+      revalidate: number;
+    };
+```
+
+It can be a boolean or an object with the following properties:
+
+| Parameter    | Type       | Description                                                 |
+| ------------ | ---------- | ----------------------------------------------------------- |
+| `tags`       | `string[]` | The tags to use for the cache.                              |
+| `revalidate` | `number`   | The number of seconds before the cache is considered stale. |
+
+### Return Values
+
+```ts
+type ServerQueryReturn = {
+  data: any;
+  error: Error | null;
+};
+```
+
+| Parameter | Type           | Description                        |
+| --------- | -------------- | ---------------------------------- |
+| `data`    | `any`          | The data returned from the fetch.  |
+| `error`   | `Error / null` | The error returned from the fetch. |

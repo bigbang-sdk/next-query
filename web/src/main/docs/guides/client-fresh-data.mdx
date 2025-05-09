@@ -1,0 +1,52 @@
+To fetch fresh data in Client Components, use the `clientQuery` function.
+
+## GET Request
+
+The following example fetches data on the client side using a GET request.
+To ensure the data is always fresh, either set `queryCache` to false or omit it entirely.
+
+<TabsCodeBlock defaultValue="client-component">
+  <TabItem value="client-component" label="Client Component">
+    ```tsx
+    "use client";
+    import { clientQuery } from "@bigbang-sdk/next-query";
+
+    function ClientComponent() {
+        const { data, error, isLoading } = clientQuery({
+            queryUrl: "https://api.example.com/data",
+        });
+
+        console.log(data, error, isLoading);
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>
+
+## POST Request
+
+The following example fetches data on the client side using a POST request.
+To ensure the data is always fresh, either set `queryCache` to false or omit it entirely.
+
+<TabsCodeBlock defaultValue="client-component">
+  <TabItem value="client-component" label="Client Component">
+    ```tsx
+    "use client";
+    import { clientQuery } from "@bigbang-sdk/next-query";
+
+    function ClientComponent() {
+      const { data, error, isLoading } = clientQuery({
+            queryUrl: "https://api.example.com/data",
+            queryOptions: {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ foo: "bar" }),
+            },
+          });
+
+      console.log(data, error, isLoading);
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>

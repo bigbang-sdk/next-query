@@ -1,0 +1,108 @@
+To fetch cached data in Server Components, use the `serverQuery` function.
+
+## GET Request
+
+The following example fetches data on the server using a GET request.
+To cache the response on the server, set `queryCache` to true or pass an object with custom cache options.
+
+<TabsCodeBlock defaultValue="server-component">
+  <TabItem value="server-component" label="Server Component">
+    ```tsx
+    import { serverQuery } from "@bigbang-sdk/next-query";
+
+    async function ServerComponent() {
+      const { data, error } = await serverQuery({
+            queryUrl: "https://api.example.com/data",
+            queryCache: true
+          });
+
+      console.log(data, error);
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>
+
+## POST Request
+
+The following example fetches data on the server using a POST request.
+To cache the response on the server, set `queryCache` to true or pass an object with custom cache options.
+
+<TabsCodeBlock defaultValue="server-component">
+  <TabItem value="server-component" label="Server Component">
+    ```tsx
+    import { serverQuery } from "@bigbang-sdk/next-query";
+
+    async function ServerComponent() {
+      const { data, error } = await serverQuery({
+            queryUrl: "https://api.example.com/data",
+            queryOptions: {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ foo: "bar" }),
+            },
+            queryCache: true
+          });
+
+      console.log(data, error);
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>
+
+## Cache Options
+
+You can also pass an object to the `queryCache` parameter to customize caching behavior.
+
+### Cache Tags
+
+Use the tags property to assign one or more tags to the cached response.
+These tags can later be revalidated by calling the `revalidateTag` function from Next.js's internal `next/cache` module with the same tag.
+
+<TabsCodeBlock defaultValue="server-component">
+  <TabItem value="server-component" label="Server Component">
+    ```tsx
+    import { serverQuery } from "@bigbang-sdk/next-query";
+
+    async function ServerComponent() {
+      const { data, error } = await serverQuery({
+            queryUrl: "https://api.example.com/data",
+            queryCache: {
+              tags: ["user", "profile"],
+            },
+          });
+
+      console.log(data, error);
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>
+
+### Cache Revalidation
+
+You can pass a number to the revalidate property to specify how many seconds the data is considered fresh.
+
+After this period, the data is considered stale. When the query is fetched again, the cached data is returned while fresh data is fetched in the background.
+The updated data will be served on the following request.
+
+<TabsCodeBlock defaultValue="server-component">
+  <TabItem value="server-component" label="Server Component">
+    ```tsx
+    import { serverQuery } from "@bigbang-sdk/next-query";
+
+    async function ServerComponent() {
+      const { data, error } = await serverQuery({
+            queryUrl: "https://api.example.com/data",
+            queryCache: {
+              revalidate: 60,
+            },
+          });
+
+      console.log(data, error);
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>

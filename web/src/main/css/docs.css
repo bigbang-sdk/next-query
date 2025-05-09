@@ -1,0 +1,82 @@
+pre code.hljs {
+  width: 100% !important;
+  background: var(--primary-foreground);
+  padding: 0 !important;
+  color: var(--foreground) !important;
+}
+
+.tabs-block > pre {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+p,
+li {
+  color: var(--foreground) !important;
+}
+pre {
+  /* padding: 0 !important;
+  margin: 0 !important; */
+  background: var(--primary-foreground);
+  word-break: break-word;
+  white-space: pre-wrap;
+  color: var(--foreground) !important;
+  border-radius: 0;
+}
+
+code {
+  /* padding: 0 !important;
+  margin: 0 !important; */
+  background: var(--primary-foreground);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0;
+}
+
+:where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  font-weight: normal;
+}
+:where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::before {
+  content: "";
+}
+
+:where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::after {
+  content: "";
+}
+
+h2 {
+  margin-top: 0.75rem;
+  font-size: 1.4rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+/* h4 {
+  font-size: 0.9rem;
+} */
+
+.mdx-level-2 {
+  margin-bottom: 1.75rem;
+}
+
+.mdx-level-3 {
+  margin-top: 1rem;
+  /* padding-left: 1rem; */
+  /* border-left: 1px solid var(--border); */
+}
+
+.mdx-level-4 {
+  margin-top: 1rem;
+  /* padding-left: 1rem; */
+  /* border-left: 1px solid var(--border); */
+}
+
+.unstyled span {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.unstyled p {
+  margin: 0 !important;
+}

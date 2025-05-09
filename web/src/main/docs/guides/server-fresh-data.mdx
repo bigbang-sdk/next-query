@@ -1,0 +1,50 @@
+To fetch fresh data in Server Components, use the `serverQuery` function.
+
+## GET Request
+
+The following example fetches data on the server using a GET request.
+To ensure the data is always fresh, either set `queryCache` to false or omit it entirely.
+
+<TabsCodeBlock defaultValue="server-component">
+  <TabItem value="server-component" label="Server Component">
+    ```tsx
+    import { serverQuery } from "@bigbang-sdk/next-query";
+
+    async function ServerComponent() {
+      const { data, error } = await serverQuery({
+            queryUrl: "https://api.example.com/data"
+          });
+
+      console.log(data, error);
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>
+
+## POST Request
+
+The following example fetches data on the server using a GET request.
+To ensure the data is always fresh, either set `queryCache` to false or omit it entirely.
+
+<TabsCodeBlock defaultValue="server-component">
+  <TabItem value="server-component" label="Server Component">
+    ```tsx
+    import { serverQuery } from "@bigbang-sdk/next-query";
+
+    async function ServerComponent() {
+      const { data, error } = await serverQuery({
+            queryUrl: "https://api.example.com/data",
+            queryOptions: {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ foo: "bar" }),
+            },
+          });
+
+      console.log(data, error);
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>
