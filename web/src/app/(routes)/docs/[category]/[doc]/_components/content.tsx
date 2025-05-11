@@ -7,7 +7,10 @@ export async function Content({ content }: { content: ReactElement<unknown, stri
 
   return (
     <div className={cn("flex-1 py-2 px-4 md:px-10", proseClassName)}>
-      <div className="w-full my-0 py-0" id="doc-content">
+      <div
+        className="w-full my-0 py-0"
+        id="doc-content"
+      >
         {content}
       </div>
     </div>

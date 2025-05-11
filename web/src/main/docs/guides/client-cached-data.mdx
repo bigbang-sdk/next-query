@@ -4,14 +4,16 @@ To fetch cached data in Client Components, use the `clientQuery` function.
 
 When fetching cached data in Client Components, the following sequence occurs:
 
-<QueryPatternsSvg patternOption="CLIENT" index={2} />
+<QueryPatternRender queryOptions={["client_cached"]} />
 
-1. **Browser**: Sends a request to the server for the website at `https://example.com`.
-2. **Server**: Sends the initial HTML response to the browser.
-3. **Browser**: Receives the response, hydrates the page and sends a request to the server for the data.
-4. **Server**: Finds the cached response for the relevant API query and sends it to the browser.
-5. **Browser**: Receives the response and displays the data.
-6. **Server**: After the response is sent, the server checks if the data is stale. If it is, the server fetches the fresh data from the API for the next request.
+| Step   | Environment | Description                                                                                                                                        |
+| ------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Pre`  | `Browser`   | Sends a request to the server for the website at `https://example.com`.                                                                            |
+| `Pre`  | `Server`    | Sends the initial HTML response to the browser.                                                                                                    |
+| `1`    | `Browser`   | Receives the response, hydrates the page and sends a request to the server for the data.                                                           |
+| `2`    | `Server`    | Finds the cached response for the relevant API query and sends it to the browser.                                                                  |
+| `3`    | `Browser`   | Receives the response and displays the data.                                                                                                       |
+| `Post` | `Server`    | After the response is sent, the server checks if the data is stale. If it is, the server fetches the fresh data from the API for the next request. |
 
 ## GET Request
 

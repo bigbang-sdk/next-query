@@ -26,19 +26,23 @@ export const AppSidebarContent = () => {
           <p className="text-sm font-semibold px-2 pt-6 block md:hidden">Documentation</p>
           {docList.map((category, index) => (
             <SidebarMenuItem key={index}>
-              <p className="text-xs text-muted-foreground font-semibold px-2 pt-2 pb-1">{category.categoryTitle}</p>
+              <p className="text-xs text-subtext font-semibold px-2 pt-2 pb-1">{category.categoryTitle}</p>
               {category.docs?.length ? (
                 <SidebarMenuSub>
                   {category.docs.map((doc, index2) => (
                     <SidebarMenuSubItem key={index2}>
-                      <SidebarMenuSubButton asChild isActive={isActive(`/docs/${category.categorySlug}/${doc.docSlug}`)} className={cn(doc.docSubtitle ? "py-4" : "py-4")}>
+                      <SidebarMenuSubButton
+                        asChild
+                        isActive={isActive(`/docs/${category.categorySlug}/${doc.docSlug}`)}
+                        className={cn(doc.docSubtitle ? "py-4" : "py-4")}
+                      >
                         <Link href={`/docs/${category.categorySlug}/${doc.docSlug}`}>
                           <div className="flex gap-x-2 items-center justify-between w-full">
                             <span className="text-sm">{doc.docTitle}</span>
                             {doc.docSubtitle && (
                               <div
                                 className={cn(
-                                  "text-xs text-muted-foreground flex gap-x-1 items-center px-2 py-0.5 rounded-md",
+                                  "text-xs text-subtext flex gap-x-1 items-center px-2 py-0.5 rounded-md",
                                   doc.docSubtitle == "Fresh" && "bg-green-500/20 text-green-500",
                                   doc.docSubtitle == "Cached" && "bg-purple-500/20 text-purple-500",
                                   doc.docSubtitle == "SWR" && "bg-cyan-500/20 text-cyan-500",

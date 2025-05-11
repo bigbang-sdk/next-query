@@ -4,12 +4,14 @@ To fetch fresh data in Client Components, use the `clientQuery` function.
 
 When fetching fresh data in Client Components, the following sequence occurs:
 
-<QueryPatternsSvg patternOption="CLIENT" index={1} />
+<QueryPatternRender queryOptions={["client_fresh"]} />
 
-1. **Browser**: Sends a request to the server for the website at `https://example.com`.
-2. **Server**: Sends the initial HTML response to the browser.
-3. **Browser**: Receives the response, hydrates the page and sends a request to the API for the data.
-4. **Browser**: Receives the fresh data and displays the data.
+| Step  | Environment | Description                                                                           |
+| ----- | ----------- | ------------------------------------------------------------------------------------- |
+| `Pre` | `Browser`   | Sends a request to the server for the website at `https://example.com`.               |
+| `Pre` | `Server`    | Sends the initial HTML response to the browser.                                       |
+| `1`   | `Browser`   | Receives the response, hydrates the page and sends a request to the API for the data. |
+| `2`   | `Browser`   | Receives the fresh data and displays the data.                                        |
 
 ## GET Request
 

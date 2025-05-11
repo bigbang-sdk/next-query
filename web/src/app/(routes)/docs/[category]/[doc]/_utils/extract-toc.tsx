@@ -4,7 +4,7 @@ import remarkMdx from "remark-mdx";
 import remarkRehype from "remark-rehype";
 import { visit } from "unist-util-visit";
 import type { Root as HASTRoot, Element as HASTElement } from "hast";
-import { getHash } from "@/main/utils/hash";
+import { makeHash } from "./inject-ids";
 
 export type NestedList = {
   text: string | null;
@@ -21,6 +21,7 @@ function extractText(children: HASTElement["children"]): string {
 }
 
 export async function extractToc(source: string): Promise<{ nestedList: NestedList[] }> {
+  const savedHashes: string[] = [];
   const nestedList: NestedList[] = [];
 
   const processor = unified()
@@ -47,7 +48,8 @@ export async function extractToc(source: string): Promise<{ nestedList: NestedLi
         if (!["h2", "h3", "h4"].includes(tagName)) return;
 
         const text = extractText(children);
-        const hash = getHash(text);
+        const hash = makeHash(text, savedHashes);
+        savedHashes.push(hash);
 
         if (tagName === "h2") {
           pushCurrentH2();

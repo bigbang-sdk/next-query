@@ -30,7 +30,7 @@ export const HeaderLinks = () => {
             href={href}
             target={isExternal ? "_blank" : undefined}
             rel={isExternal ? "noopener noreferrer" : undefined}
-            className={cn("text-sm text-muted-foreground hover:text-primary flex items-center gap-2", isActive && !isExternal && "text-primary")}
+            className={cn("text-sm text-subtext hover:text-text flex items-center gap-2", isActive && !isExternal && "text-text")}
           >
             {icon}
             <span className="hidden md:block">{title}</span>

@@ -24,20 +24,22 @@ export function ThemeToggle({ withBox = true }: { withBox?: boolean }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div
-          className={cn(
-            "cursor-pointer flex items-center justify-center rounded-md outline-none border-none text-muted-foreground hover:text-foreground w-8.5 h-8.5",
-            withBox && "bg-primary-foreground"
-          )}
-        >
+        <div className={cn("cursor-pointer flex items-center justify-center rounded-md outline-none border-none text-subtext hover:text-foreground w-8.5 h-8.5", withBox && "bg-primary-foreground")}>
           {mounted ? themeIcons[theme as keyof typeof themeIcons] ?? themeIcons.system : themeIcons.system}
           <span className="sr-only">Toggle theme</span>
         </div>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="border-none">
+      <DropdownMenuContent
+        align="end"
+        className="border-none"
+      >
         {themeOptions.map(({ value, label, Icon }) => (
-          <DropdownMenuItem key={value} onClick={() => setTheme(value)} className="flex items-center gap-2 text-muted-foreground hover:text-foreground">
+          <DropdownMenuItem
+            key={value}
+            onClick={() => setTheme(value)}
+            className="flex items-center gap-2 text-subtext hover:text-foreground"
+          >
             <Icon className="h-[1.2rem] w-[1.2rem]" />
             {label}
           </DropdownMenuItem>

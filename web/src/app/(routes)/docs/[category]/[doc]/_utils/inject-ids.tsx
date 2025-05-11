@@ -3,13 +3,16 @@ import type { Root, RootContent } from "hast";
 import { getHash } from "@/main/utils/hash";
 
 export const injectIds = () => {
+  const savedHashes: string[] = [];
+
   return (tree: Root) => {
     visit(tree, "element", (node) => {
       if (!["h2", "h3", "h4"].includes(node.tagName)) return;
       const textNode = node.children?.find((c: { type: string }) => c.type === "text");
       const text = textNode && "value" in textNode ? textNode.value : "";
       if (!text) return;
-      const hash = getHash(text);
+      const hash = makeHash(text, savedHashes);
+      savedHashes.push(hash);
 
       node.properties = {
         ...(node.properties || {}),
@@ -56,4 +59,14 @@ export const injectIds = () => {
     closeTo(0);
     tree.children = newChildren as unknown as RootContent[];
   };
+};
+
+export const makeHash = (text: string, savedHashes: string[]): string => {
+  let index = 0;
+  const hash = getHash(text);
+  if (savedHashes.includes(hash)) {
+    index++;
+    return makeHash(text + index, savedHashes);
+  }
+  return hash;
 };

@@ -20,7 +20,10 @@ export default function NotFound() {
       </div>
 
       <p className="text-xl -mt-6">{"You've stumbled upon a page that doesn't exist."}</p>
-      <Link href="/" className="mt-10 flex items-center gap-1 underline underline-offset-4 text-muted-foreground hover:text-foreground">
+      <Link
+        href="/"
+        className="mt-10 flex items-center gap-1 underline underline-offset-4 text-subtext hover:text-foreground"
+      >
         Return Home
         <ArrowRight className="w-4 h-4" />
       </Link>

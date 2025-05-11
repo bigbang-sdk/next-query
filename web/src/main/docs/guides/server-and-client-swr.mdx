@@ -7,15 +7,19 @@ Since the data is fetched on the server, it's included in the initial page load,
 
 When fetching data using SWR with both Server and Client Components, the following sequence occurs:
 
-<QueryPatternsSvg patternOption="BOTH" />
+<QueryPatternRender queryOptions={["both"]} />
 
-1. **Browser**: Sends a request to the server for the website at `https://example.com`.
-2. **Server**: Retrieves the cached response for the relevant API query and returns the rendered HTML containing the cached data.
-3. **Server**: After sending the response, checks if the cached data is stale. If it is, it fetches fresh data from the API to update the cache for future requests.
-4. **Browser**: Hydrates the page with the cached data and simultaneously initiates a client-side request to fetch the latest data.
-5. **Browser**: Receives the fresh data and updates the UI accordingly.
+| Step   | Environment | Description                                                                                                                                                  |
+| ------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Pre`  | `Browser`   | Sends a request to the server for the website at `https://example.com`.                                                                                      |
+| `1`    | `Server`    | Retrieves the cached response for the relevant API query and returns the rendered HTML containing the cached data.                                           |
+| `2`    | `Browser`   | Hydrates the page with the cached data and simultaneously initiates a client-side request to fetch the latest data.                                          |
+| `3`    | `Browser`   | Receives the fresh data and updates the UI accordingly.                                                                                                      |
+| `Post` | `Server`    | After sending the response, server checks if the cached data is stale. If it is, it fetches fresh data from the API to update the cache for future requests. |
 
-## Start with Server Query
+## GET Request
+
+### 1. Start with Server Query
 
 The following example fetches data on the server using a GET request.
 The returned data is then passed as initial data to the `ClientComponent`.
@@ -39,7 +43,7 @@ The returned data is then passed as initial data to the `ClientComponent`.
   </TabItem>
 </TabsCodeBlock>
 
-## Revalidate on Client
+### 2. Revalidate on Client
 
 The following example receives `initialData` as props from the `ServerComponent` and then fetches fresh data on the client using `clientQuery`.
 
@@ -55,6 +59,75 @@ The following example receives `initialData` as props from the `ServerComponent`
 
       const { data, error, isLoading } = clientQuery({
             queryUrl: "https://api.example.com/data"
+          });
+
+      useEffect(() => {
+        setFetchedData(data);
+      }, [data]);
+
+      return (
+        <div>
+          <p>{fetchedData}</p>
+        </div>
+      )
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>
+
+## POST Request
+
+### 1. Start with Server Query
+
+The following example fetches data on the server using a POST request.
+The returned data is then passed as initial data to the `ClientComponent`.
+
+<TabsCodeBlock defaultValue="server-component">
+  <TabItem value="server-component" label="Server Component">
+    ```tsx
+    import { serverQuery } from "@bigbang-sdk/next-query";
+
+    async function ServerComponent() {
+        const { data, error } = await serverQuery({
+            queryUrl: "https://api.example.com/data",
+            queryOptions: {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ foo: "bar" }),
+            },
+        });
+
+        return (
+            <ClientComponent initialData={data} />
+        )
+    }
+    ```
+
+  </TabItem>
+</TabsCodeBlock>
+
+### 2. Revalidate on Client
+
+The following example receives `initialData` as props from the `ServerComponent` and then fetches fresh data on the client using `clientQuery`.
+
+<TabsCodeBlock defaultValue="client-component">
+  <TabItem value="client-component" label="Client Component">
+    ```tsx
+    "use client";
+    import { useState, useEffect } from "react";
+    import { clientQuery } from "@bigbang-sdk/next-query";
+
+    function ClientComponent({ initialData }: { initialData: any }) {
+      const [fetchedData, setFetchedData] = useState(initialData);
+
+      const { data, error, isLoading } = clientQuery({
+            queryUrl: "https://api.example.com/data",
+            queryOptions: {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ foo: "bar" }),
+            },
           });
 
       useEffect(() => {

@@ -49,7 +49,10 @@ export const TableOfContents = ({ nestedList }: { nestedList: NestedList[] }) =>
     <aside className="sticky top-24 h-[calc(100vh-6rem)] w-[16rem] overflow-y-auto border-l py-6 pl-5 pr-5 hidden lg:block">
       <p className="mb-2 text-sm font-semibold">On this page</p>
       <nav className="flex flex-col">
-        <List items={nestedList} activeHash={activeHash} />
+        <List
+          items={nestedList}
+          activeHash={activeHash}
+        />
       </nav>
     </aside>
   );
@@ -58,11 +61,23 @@ export const TableOfContents = ({ nestedList }: { nestedList: NestedList[] }) =>
 const List = ({ items, activeHash, depth = 0 }: { items: NestedList[]; activeHash: string | null; depth?: number }) => (
   <>
     {items.map((item) => (
-      <div key={item.hash} className={cn("flex flex-col", depth > 0 && "ml-3")}>
-        <Link href={`#${item.hash}`} className={cn("mb-2 text-sm hover:text-primary", activeHash === item.hash ? "text-primary font-medium" : "text-subtext")}>
+      <div
+        key={item.hash}
+        className={cn("flex flex-col", depth > 0 && "ml-3")}
+      >
+        <Link
+          href={`#${item.hash}`}
+          className={cn("mb-2 text-sm hover:text-text", activeHash === item.hash ? "text-text font-medium" : "text-subtext")}
+        >
           {item.text}
         </Link>
-        {item.children?.length > 0 && <List items={item.children} activeHash={activeHash} depth={depth + 1} />}
+        {item.children?.length > 0 && (
+          <List
+            items={item.children}
+            activeHash={activeHash}
+            depth={depth + 1}
+          />
+        )}
       </div>
     ))}
   </>
