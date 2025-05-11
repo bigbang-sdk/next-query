@@ -37,34 +37,6 @@ To cache the response on the server, set `queryCache` to true or pass an object 
   </TabItem>
 </TabsCodeBlock>
 
-## POST Request
-
-The following example fetches data on the server using a POST request.
-To cache the response on the server, set `queryCache` to true or pass an object with custom cache options.
-
-<TabsCodeBlock defaultValue="server-component">
-  <TabItem value="server-component" label="Server Component">
-    ```tsx
-    import { serverQuery } from "@bigbang-sdk/next-query";
-
-    async function ServerComponent() {
-      const { data, error } = await serverQuery({
-            queryUrl: "https://api.example.com/data",
-            queryOptions: {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ foo: "bar" }),
-            },
-            queryCache: true
-          });
-
-      console.log(data, error);
-    }
-    ```
-
-  </TabItem>
-</TabsCodeBlock>
-
 ## Cache Options
 
 You can also pass an object to the `queryCache` parameter to customize caching behavior.
