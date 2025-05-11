@@ -8,9 +8,15 @@ export default async function HomeHero() {
       <div className="flex flex-1 flex-col items-center justify-center overflow-hidden square-grid-bg bg-background">
         <div className="w-full flex items-center justify-center min-h-[600px] md:min-h-[500px]">
           <div className="flex flex-col items-center justify-center">
-            <TagList tags={tags.slice(0, 4)} offset={0} />
+            <TagList
+              tags={tags.slice(0, 4)}
+              offset={0}
+            />
             <HeroText />
-            <TagList tags={tags.slice(4)} offset={4} />
+            <TagList
+              tags={tags.slice(4)}
+              offset={4}
+            />
           </div>
         </div>
       </div>
@@ -19,19 +25,15 @@ export default async function HomeHero() {
 }
 
 function HeroText() {
-  const titleClass = "text-[4rem] lg:text-[6rem] font-bold px-2";
-  const renderWord = (word: string) =>
-    word.split("").map((char, index) => (
-      <p key={index} className={titleClass}>
-        {char}
-      </p>
-    ));
+  const titleClass = "text-[4rem] lg:text-[6rem] font-bold tracking-[14px]";
 
   return (
-    <div className="block md:flex items-center justify-center gap-x-4">
-      <div className="flex justify-center">{renderWord("NEXT")}</div>
-      <div className="flex justify-center">{renderWord("QUERY")}</div>
-    </div>
+    <>
+      <div className="block md:flex items-center justify-center gap-x-6 pl-2 text-center">
+        <p className={titleClass}>NEXT</p>
+        <p className={titleClass}>QUERY</p>
+      </div>
+    </>
   );
 }
 
@@ -39,7 +41,11 @@ function TagList({ tags, offset }: { tags: string[]; offset: number }) {
   return (
     <div className={cn("grid grid-cols-2 md:grid-cols-4 gap-x-10 gap-y-8 lg:gap-x-14", offset === 0 ? "mb-5" : "mt-5")}>
       {tags.map((tag, i) => (
-        <Tag key={tag} tag={tag} index={i + offset} />
+        <Tag
+          key={tag}
+          tag={tag}
+          index={i + offset}
+        />
       ))}
     </div>
   );

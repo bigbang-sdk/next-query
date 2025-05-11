@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { SidebarContent, SidebarGroup, SidebarMenu, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem } from "@/shadcn/components/ui/sidebar";
+import { SidebarContent, SidebarGroup, SidebarMenu, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, useSidebar } from "@/shadcn/components/ui/sidebar";
 import { docList } from "@/main/docs/docs-list";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -10,6 +10,7 @@ import { RiExchange2Line } from "react-icons/ri";
 import { LucidePackageOpen } from "lucide-react";
 
 export const AppSidebarContent = () => {
+  const { setOpenMobile } = useSidebar();
   const pathname = usePathname();
 
   const isActive = (path: string) => {
@@ -36,7 +37,10 @@ export const AppSidebarContent = () => {
                         isActive={isActive(`/docs/${category.categorySlug}/${doc.docSlug}`)}
                         className={cn(doc.docSubtitle ? "py-4" : "py-4")}
                       >
-                        <Link href={`/docs/${category.categorySlug}/${doc.docSlug}`}>
+                        <Link
+                          href={`/docs/${category.categorySlug}/${doc.docSlug}`}
+                          onClick={() => setOpenMobile(false)}
+                        >
                           <div className="flex gap-x-2 items-center justify-between w-full">
                             <span className="text-sm">{doc.docTitle}</span>
                             {doc.docSubtitle && (
