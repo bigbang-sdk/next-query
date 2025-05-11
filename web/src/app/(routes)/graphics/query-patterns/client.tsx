@@ -26,7 +26,7 @@ export const PageClient = ({ q }: { q: string }) => {
   return (
     <SaveAsImage
       id={`fetch-pattern-${patternType}-${theme}`}
-      className="w-full"
+      className="w-full bg-black"
     >
       <SVG.Root
         canvasWidth={canvasWidth}

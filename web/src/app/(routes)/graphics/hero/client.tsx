@@ -8,7 +8,7 @@ export default function PageClient() {
   return (
     <SaveAsImage
       id={`hero-${theme}`}
-      className="w-full dark:bg-black/20"
+      className="w-full"
     >
       <HeroSvg
         border
