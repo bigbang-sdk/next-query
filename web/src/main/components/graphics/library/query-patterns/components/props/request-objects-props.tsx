@@ -4,7 +4,7 @@ import { CANVAS_CALCULATION } from "../utils/calculation";
 import { CANVAS_DEFAULTS } from "../utils/defaults";
 
 const { yBoxTop, yBoxBottom, boxWidthPercent } = CANVAS_CALCULATION;
-const { partitionHeight } = CANVAS_DEFAULTS;
+const { partitionHeight } = CANVAS_DEFAULTS.canvasProps;
 
 export type T_REQUEST_OBJECT_PROPS = {
   color: string;

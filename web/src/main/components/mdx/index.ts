@@ -2,7 +2,7 @@ import { TabsCodeBlock, TabItem } from "./components/tabs-code-block/tabs-code-b
 import { GraphicImage } from "../graphics/graphic-image/graphic-image";
 import { HorizontalDivs } from "./components/horizontal-divs";
 import { VerticalDivs } from "./components/vertical-divs";
-import { QueryPatternRender } from "../graphics/library/query-patterns/render/query-pattern-render";
+import { Graphics } from "../graphics/library/graphics";
 
 const mdxComponents = {
   TabsCodeBlock,
@@ -10,8 +10,7 @@ const mdxComponents = {
   HorizontalDivs,
   VerticalDivs,
   GraphicImage,
-
-  QueryPatternRender,
+  Graphics,
 };
 
 export default mdxComponents;

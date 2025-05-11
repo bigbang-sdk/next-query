@@ -1,4 +1,4 @@
-import { SvgHorizontalLine, SvgVerticalLine } from "@/main/components/svg-helpers/svg-helpers";
+import { SVG } from "@/main/components/svg-helpers/svg-helpers";
 import { CANVAS_DEFAULTS } from "../../utils/defaults";
 
 type T_BORDER_LINES = {
@@ -8,12 +8,12 @@ type T_BORDER_LINES = {
 };
 
 export const BorderLines = ({ width, height, dividingPoints }: T_BORDER_LINES) => {
-  const { gridLinesStrokeWidth } = CANVAS_DEFAULTS;
+  const { gridLinesStrokeWidth } = CANVAS_DEFAULTS.gridProps;
 
   return (
     <g id="border-lines">
       {Array.from({ length: 2 }).map((_, index) => (
-        <SvgHorizontalLine
+        <SVG.HorizontalLine
           key={index}
           point={index === 0 ? 0 : height}
           size={width}
@@ -21,7 +21,7 @@ export const BorderLines = ({ width, height, dividingPoints }: T_BORDER_LINES) =
         />
       ))}
       {Array.from({ length: 2 }).map((_, index) => (
-        <SvgVerticalLine
+        <SVG.VerticalLine
           key={index}
           point={index === 0 ? 0 : width}
           size={height}
@@ -29,7 +29,7 @@ export const BorderLines = ({ width, height, dividingPoints }: T_BORDER_LINES) =
         />
       ))}
       {dividingPoints?.map((point, index) => (
-        <SvgVerticalLine
+        <SVG.VerticalLine
           key={index}
           point={point}
           size={height}

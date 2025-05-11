@@ -5,8 +5,7 @@ import { T_QUERY_OPTION } from "../../utils/types";
 
 export const RequestObjects = ({ queryOption }: { queryOption: T_QUERY_OPTION }) => {
   const props = getRequestObjectProps(queryOption);
-  const { narrowCanvasWidth } = CANVAS_DEFAULTS;
-  const canvasWidth = narrowCanvasWidth;
+  const canvasWidth = CANVAS_DEFAULTS.canvasProps.narrowCanvasWidth;
 
   return (
     <g>
@@ -33,7 +32,8 @@ export const RequestObjects = ({ queryOption }: { queryOption: T_QUERY_OPTION })
 };
 
 const RequestCircle = ({ prop, canvasWidth }: { prop: T_REQUEST_OBJECT_PROPS; canvasWidth: number }) => {
-  const { headerHeight, bodyHeight, circleRadius } = CANVAS_DEFAULTS;
+  const { headerHeight, bodyHeight } = CANVAS_DEFAULTS.canvasProps;
+  const { circleRadius } = CANVAS_DEFAULTS.requestObjectProps;
   const IconComponent = prop.iconType === "down" ? ChevronDown : ChevronUp;
 
   const baseX = canvasWidth / 2 - circleRadius;

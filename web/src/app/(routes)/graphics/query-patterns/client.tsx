@@ -4,7 +4,7 @@ import { GridLines } from "@/main/components/graphics/library/query-patterns/com
 import { CANVAS_DEFAULTS } from "@/main/components/graphics/library/query-patterns/components/utils/defaults";
 import { T_QUERY_OPTION } from "@/main/components/graphics/library/query-patterns/components/utils/types";
 import { QueryPatternSvg } from "@/main/components/graphics/library/query-patterns/svg/query-pattern-svg";
-import { CreateSvg } from "@/main/components/svg-helpers/svg-helpers";
+import { SVG } from "@/main/components/svg-helpers/svg-helpers";
 import { SaveAsImage } from "@/main/wrappers/save-as-image";
 import { notFound } from "next/navigation";
 import { useSafeTheme } from "@/main/wrappers/theme-provider";
@@ -19,7 +19,7 @@ export const PageClient = ({ q }: { q: string }) => {
   queryOptions.forEach((option) => {
     if (!queryOptions.includes(option)) notFound();
   });
-  const { fullCanvasWidth, narrowCanvasWidth, canvasHeight } = CANVAS_DEFAULTS;
+  const { fullCanvasWidth, narrowCanvasWidth, canvasHeight } = CANVAS_DEFAULTS.canvasProps;
   const canvasWidth = fullCanvasWidth;
 
   const patternType = checkPatterns(queryOptions);
@@ -28,7 +28,7 @@ export const PageClient = ({ q }: { q: string }) => {
       id={`fetch-pattern-${patternType}-${theme}`}
       className="w-full"
     >
-      <CreateSvg
+      <SVG.Root
         canvasWidth={canvasWidth}
         canvasHeight={canvasHeight}
       >
@@ -50,7 +50,7 @@ export const PageClient = ({ q }: { q: string }) => {
             </g>
           );
         })}
-      </CreateSvg>
+      </SVG.Root>
     </SaveAsImage>
   );
 };

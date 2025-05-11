@@ -7,9 +7,9 @@ import { docList } from "@/main/docs/docs-list";
 import { DocCategory } from "@/main/docs/docs-list";
 import { Doc } from "@/main/docs/docs-list";
 import { notFound } from "next/navigation";
-import mdxComponents from "@/main/components/mdx";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
+import mdxComponents from "@/main/components/mdx";
 
 export async function loadMdx({ category, doc }: { category: string; doc: string }) {
   const docCategory = docList.find((docCategory: DocCategory) => docCategory.categorySlug === category) || notFound();
@@ -27,6 +27,7 @@ export async function loadMdx({ category, doc }: { category: string; doc: string
 
   const { content } = await compileMDX({
     source,
+    // @ts-expect-error - Working
     components: mdxComponents,
     options: {
       parseFrontmatter: false,

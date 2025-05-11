@@ -1,7 +1,4 @@
-<GraphicImage
-  id="hero"
-  priority
-/>
+<Graphics.Hero.Render />
 
 Next Query is a data-fetching library for Next.js that simplifies the process of retrieving data in both Server and Client Components.
 
@@ -28,7 +25,7 @@ By enabling access to the cache on the client, Next Query ensures instant page l
 
 Client Components, `clientQuery` can be used to fetch data in the following ways:
 
-<QueryPatternRender
+<Graphics.QueryPatterns.Render
   queryOptions={["client_fresh", "client_cached", "client_swr"]}
   size="full"
 />
@@ -63,7 +60,7 @@ When using this pattern, the data is fetched from Next.js's native fetch cache a
 
 Server Components, `serverQuery` can be used to fetch data in the following ways:
 
-<QueryPatternRender
+<Graphics.QueryPatterns.Render
   queryOptions={["server_fresh", "server_cached"]}
   size="full"
 />
@@ -91,7 +88,7 @@ When using this pattern, the data is fetched from Next.js's native fetch cache.
 To fetch data using SWR (Stale-While-Revalidate) while leveraging both Server and Client Components, you can combine the `serverQuery` and `clientQuery` functions.
 In this pattern, the cached data is sent from the server to the client upon the page request, and when the component is mounted on the client, the data is revalidated.
 
-<QueryPatternRender
+<Graphics.QueryPatterns.Render
   queryOptions={["both"]}
   size="full"
 />

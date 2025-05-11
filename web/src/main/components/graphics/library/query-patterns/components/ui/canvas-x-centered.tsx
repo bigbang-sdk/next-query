@@ -14,11 +14,11 @@ export type T_X_CENTERED_PROPS = {
 
 const TitleWithIcon = ({ canvasWidth, y, props, gapY, fontWeight }: { canvasWidth: number; y: number; props: T_X_CENTERED_PROPS; gapY: number; fontWeight?: number | undefined }) => {
   const IconComponent = props.icon;
+  const { fontSizeText, fontCharacterWidthEstimate } = CANVAS_DEFAULTS.fontProps;
 
   const iconSize = 18;
   const gap = 6;
-  const fontSize = CANVAS_DEFAULTS.fontSizeText;
-  const textWidthEstimate = props.title.length * fontSize * CANVAS_DEFAULTS.fontCharacterWidthEstimate;
+  const textWidthEstimate = props.title.length * fontSizeText * fontCharacterWidthEstimate;
   const totalElementWidth = iconSize + gap + textWidthEstimate;
 
   return (
@@ -35,7 +35,7 @@ const TitleWithIcon = ({ canvasWidth, y, props, gapY, fontWeight }: { canvasWidt
         textAnchor="start"
         dominantBaseline="middle"
         fill={COLORS.text}
-        fontSize={CANVAS_DEFAULTS.fontSizeText}
+        fontSize={fontSizeText}
         fontWeight={fontWeight ?? undefined}
       >
         {props.title}
@@ -45,8 +45,8 @@ const TitleWithIcon = ({ canvasWidth, y, props, gapY, fontWeight }: { canvasWidt
 };
 
 const Subtitle = ({ canvasWidth, y, props, gapY }: { canvasWidth: number; y: number; props: T_X_CENTERED_PROPS; gapY: number }) => {
-  const fontSize = CANVAS_DEFAULTS.fontSizeSubtext;
-  const textWidthEstimate = props.subtitle.length * fontSize * CANVAS_DEFAULTS.fontCharacterWidthEstimate;
+  const { fontSizeSubtext, fontCharacterWidthEstimate } = CANVAS_DEFAULTS.fontProps;
+  const textWidthEstimate = props.subtitle.length * fontSizeSubtext * fontCharacterWidthEstimate;
   const totalElementWidth = textWidthEstimate;
 
   return (
@@ -57,7 +57,7 @@ const Subtitle = ({ canvasWidth, y, props, gapY }: { canvasWidth: number; y: num
         textAnchor="start"
         dominantBaseline="middle"
         fill={COLORS.text}
-        fontSize={CANVAS_DEFAULTS.fontSizeSubtext}
+        fontSize={fontSizeSubtext}
       >
         {props.subtitle}
       </text>

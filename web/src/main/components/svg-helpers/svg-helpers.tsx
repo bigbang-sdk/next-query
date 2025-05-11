@@ -6,7 +6,7 @@ type T_CREATE_SVG = {
   children: React.ReactNode;
 } & React.SVGProps<SVGSVGElement>;
 
-export const CreateSvg = ({ canvasWidth, canvasHeight, children, ...props }: T_CREATE_SVG) => {
+const Root = ({ canvasWidth, canvasHeight, children, ...props }: T_CREATE_SVG) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +30,7 @@ export type T_SVG_BOX = {
   dashed?: boolean;
 };
 
-export const SvgBox = ({ x, y, width, height, stroke = COLORS.border, fill = "transparent", radius = 8, strokeWidth = 1, dashed = false }: T_SVG_BOX) => {
+const Box = ({ x, y, width, height, stroke = COLORS.border, fill = "transparent", radius = 8, strokeWidth = 1, dashed = false }: T_SVG_BOX) => {
   return (
     <>
       <rect
@@ -57,7 +57,7 @@ export type T_SVG_HORIZONTAL_LINE = {
   strokeWidth?: number;
 };
 
-export const SvgHorizontalLine = ({ point, size, color = COLORS.border, strokeWidth = 1 }: T_SVG_HORIZONTAL_LINE) => {
+const HorizontalLine = ({ point, size, color = COLORS.border, strokeWidth = 1 }: T_SVG_HORIZONTAL_LINE) => {
   return (
     <>
       <line
@@ -81,7 +81,7 @@ export type T_SVG_VERTICAL_LINE = {
   strokeWidth?: number;
 };
 
-export const SvgVerticalLine = ({ point, y1 = 0, y2 = 0, size, color = COLORS.border, strokeWidth = 1 }: T_SVG_VERTICAL_LINE) => {
+const VerticalLine = ({ point, y1 = 0, y2 = 0, size, color = COLORS.border, strokeWidth = 1 }: T_SVG_VERTICAL_LINE) => {
   y2 = y2 == 0 ? size : y2;
   return (
     <line
@@ -93,4 +93,11 @@ export const SvgVerticalLine = ({ point, y1 = 0, y2 = 0, size, color = COLORS.bo
       strokeWidth={strokeWidth}
     />
   );
+};
+
+export const SVG = {
+  Root: Root,
+  Box: Box,
+  HorizontalLine: HorizontalLine,
+  VerticalLine: VerticalLine,
 };

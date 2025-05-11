@@ -4,7 +4,8 @@ import { getBoxesProps, T_BOX_PROPS } from "../../props/boxes-props";
 import { CanvasXCentered, T_X_CENTERED_PROPS } from "../../ui/canvas-x-centered";
 
 export const Boxes = ({ queryOption }: { queryOption: T_QUERY_OPTION }) => {
-  const { narrowCanvasWidth, bodyHeight, headerHeight, gridLinesHorizontal } = CANVAS_DEFAULTS;
+  const { narrowCanvasWidth, bodyHeight, headerHeight } = CANVAS_DEFAULTS.canvasProps;
+  const { gridLinesHorizontal } = CANVAS_DEFAULTS.gridProps;
   const canvasWidth = narrowCanvasWidth;
   const sectionHeight = bodyHeight / gridLinesHorizontal;
 
@@ -38,7 +39,9 @@ export const Boxes = ({ queryOption }: { queryOption: T_QUERY_OPTION }) => {
 };
 
 const BoxOutline = ({ props }: { props: T_BOX_PROPS }) => {
-  const { narrowCanvasWidth, headerHeight, boxHeight, boxWidth, boxRadius, boxStrokeWidth, bodyHeight, gridLinesHorizontal, boxFillOpacity } = CANVAS_DEFAULTS;
+  const { narrowCanvasWidth, headerHeight, bodyHeight } = CANVAS_DEFAULTS.canvasProps;
+  const { boxHeight, boxWidth, boxRadius, boxStrokeWidth, boxFillOpacity } = CANVAS_DEFAULTS.boxProps;
+  const { gridLinesHorizontal } = CANVAS_DEFAULTS.gridProps;
   const canvasWidth = narrowCanvasWidth;
   const sectionHeight = bodyHeight / gridLinesHorizontal;
   const sectionWhitespace = sectionHeight - boxHeight;

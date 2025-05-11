@@ -1,24 +1,24 @@
 <a aria-lable="Next Query" href="https://query.bigbang.build/">
-<picture>
-<source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/hero-banners/hero-dark.webp" media="(prefers-color-scheme: dark)" />
-<source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/hero-banners/hero-light.webp" media="(prefers-color-scheme: light)" />
-<img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/hero-banners/hero-light.webp" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
-</picture>
+  <picture>
+    <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/hero-banners/hero-dark.svg" media="(prefers-color-scheme: dark)" />
+    <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/hero-banners/hero-light.svg" media="(prefers-color-scheme: light)" />
+    <img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/hero-banners/hero-light.svg" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
+  </picture>
 </a>
 
 <p align="center">
   <a aria-label="Bigbang logo" href="https://query.bigbang.build/">
-    <img src="https://badgen.net/badge/icon/Made%20by%20Bigbang?icon=https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/logo/logo-white.svg&label&color=black&labelColor=black">
+    <img src="https://badgen.net/badge/icon/Made%20by%20Bigbang?icon=https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/logo/logo-white.svg&label&color=black&labelColor=black"/>
   </a>
   <br/>
   <a aria-label="NPM version" href="https://www.npmjs.com/package/@bigbang-sdk/next-query">
-    <img alt="" src="https://badgen.net/npm/v/@bigbang-sdk/next-query?&labelColor=black">
+    <img alt="" src="https://badgen.net/npm/v/@bigbang-sdk/next-query?&labelColor=black"/>
   </a>
   <a aria-label="Package size" href="https://bundlephobia.com/result?p=@bigbang-sdk/next-query">
-    <img alt="" src="https://badgen.net/bundlephobia/minzip/@bigbang-sdk/next-query?&labelColor=black">
+    <img alt="" src="https://badgen.net/bundlephobia/minzip/@bigbang-sdk/next-query?&labelColor=black"/>
   </a>
   <a aria-label="License" href="https://github.com/bigbang-sdk/next-query/blob/main/package/LICENSE">
-    <img alt="" src="https://badgen.net/npm/license/@bigbang-sdk/next-query?&labelColor=black">
+    <img alt="" src="https://badgen.net/npm/license/@bigbang-sdk/next-query?&labelColor=black"/>
   </a>
 </p>
 
@@ -54,9 +54,9 @@ By enabling access to the cache on the client, Next Query ensures instant page l
 Client Components, `clientQuery` can be used to fetch data in the following ways:
 
 <picture>
-  <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-client-dark.svg" media="(prefers-color-scheme: dark)" />
-    <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-client-light.svg" media="(prefers-color-scheme: light)" />
-    <img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-client-light.svg" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
+  <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-client-dark.svg" media="(prefers-color-scheme: dark)" />
+    <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-client-light.svg" media="(prefers-color-scheme: light)" />
+    <img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-client-light.svg" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
 </picture>
 
 **Fresh data**
@@ -76,9 +76,9 @@ When using this pattern, the data is fetched from Next.js's native fetch cache a
 Server Components, `serverQuery` can be used to fetch data in the following ways:
 
 <picture>
-  <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-server-dark.svg" media="(prefers-color-scheme: dark)" />
-    <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-server-light.svg" media="(prefers-color-scheme: light)" />
-    <img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-server-light.svg" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
+  <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-server-dark.svg" media="(prefers-color-scheme: dark)" />
+    <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-server-light.svg" media="(prefers-color-scheme: light)" />
+    <img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-server-light.svg" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
 </picture>
 
 **Fresh data**
@@ -95,9 +95,9 @@ To fetch data using SWR (Stale-While-Revalidate) while leveraging both Server an
 In this pattern, the cached data is sent from the server to the client upon the page request, and when the component is mounted on the client, the data is revalidated.
 
 <picture>
-  <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-both-dark.svg" media="(prefers-color-scheme: dark)" />
-    <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-both-light.svg" media="(prefers-color-scheme: light)" />
-    <img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/svg/fetch-pattern-both-light.svg" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
+  <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-both-dark.svg" media="(prefers-color-scheme: dark)" />
+    <source srcset="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-both-light.svg" media="(prefers-color-scheme: light)" />
+    <img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-both-light.svg" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
 </picture>
 
 Since the data is fetched on the server, it's included in the initial page load, significantly improving perceived performance.

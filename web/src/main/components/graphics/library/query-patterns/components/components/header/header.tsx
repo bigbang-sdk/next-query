@@ -5,7 +5,8 @@ import { CanvasXCentered, T_X_CENTERED_PROPS } from "../../ui/canvas-x-centered"
 
 export const Header = ({ queryOption }: { queryOption: T_QUERY_OPTION }) => {
   const headerProps = getHeaderProps(queryOption);
-  const { narrowCanvasWidth, headerHeight } = CANVAS_DEFAULTS;
+  const { narrowCanvasWidth, headerHeight } = CANVAS_DEFAULTS.canvasProps;
+  const { fontWeightHeader } = CANVAS_DEFAULTS.fontProps;
   const canvasWidth = narrowCanvasWidth;
 
   const gapY = headerHeight / 7;
@@ -16,7 +17,7 @@ export const Header = ({ queryOption }: { queryOption: T_QUERY_OPTION }) => {
         y={headerHeight / 2}
         props={headerProps as T_X_CENTERED_PROPS}
         gapY={gapY}
-        fontWeight={CANVAS_DEFAULTS.fontWeightHeader}
+        fontWeight={fontWeightHeader}
       />
       <CanvasXCentered.Subtitle
         canvasWidth={canvasWidth}

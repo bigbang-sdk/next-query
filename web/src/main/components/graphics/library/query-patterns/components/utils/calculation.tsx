@@ -1,6 +1,7 @@
 import { CANVAS_DEFAULTS } from "./defaults";
-const { boxHeight, headerHeight, bodyHeight, gridLinesHorizontal, boxWidth } = CANVAS_DEFAULTS;
-
+const { bodyHeight, headerHeight } = CANVAS_DEFAULTS.canvasProps;
+const { gridLinesHorizontal } = CANVAS_DEFAULTS.gridProps;
+const { boxHeight, boxWidth } = CANVAS_DEFAULTS.boxProps;
 const partitionHeight = bodyHeight / gridLinesHorizontal;
 
 const yPartitionTop = (boxIndex: number): number => headerHeight + partitionHeight * (boxIndex - 1);
