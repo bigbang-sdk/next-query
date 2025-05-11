@@ -59,15 +59,15 @@ Client Components, `clientQuery` can be used to fetch data in the following ways
     <img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-client-light.svg" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
 </picture>
 
-**Fresh data**
+#### - Fresh data
 
 When using this pattern, the data is fetched directly from the fetch URL and is not cached.
 
-**Cached data**
+#### - Cached data
 
 When using this pattern, the data is fetched from Next.js's native fetch cache via an API route handler.
 
-**SWR**
+#### - SWR
 
 When using this pattern, the data is fetched from Next.js's native fetch cache and is revalidated when the component is mounted on the client.
 
@@ -81,11 +81,11 @@ Server Components, `serverQuery` can be used to fetch data in the following ways
     <img src="https://raw.githubusercontent.com/bigbang-sdk/assets/refs/heads/main/fetch-patterns/fetch-pattern-server-light.svg" alt="Fetch Pattern" referrerpolicy="no-referrer-when-downgrade" />
 </picture>
 
-**Fresh data**
+#### - Fresh data
 
 When using this pattern, the data is fetched directly from the fetch URL and is not cached.
 
-#### Cached data
+#### - Cached data
 
 When using this pattern, the data is fetched from Next.js's native fetch cache.
 

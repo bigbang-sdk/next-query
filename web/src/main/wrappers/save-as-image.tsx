@@ -50,7 +50,10 @@ export const SaveAsImage: React.FC<{
 
   return (
     <>
-      <div className={cn(className)} id={id}>
+      <div
+        className={cn(className)}
+        id={id}
+      >
         {children}
       </div>
       <div className="flex items-center justify-end gap-2 mt-1 text-xs font-semibold text-subtext">
@@ -78,7 +81,10 @@ export const SaveAsImage: React.FC<{
             {FORMATS.map((format, i) => (
               <React.Fragment key={format}>
                 {i > 0 && <span>|</span>}
-                <button className="ml-1 cursor-pointer hover:text-foreground" onClick={() => handleSave(format)}>
+                <button
+                  className="ml-1 cursor-pointer hover:text-foreground"
+                  onClick={() => handleSave(format)}
+                >
                   {format}
                 </button>
               </React.Fragment>
