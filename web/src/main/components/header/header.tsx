@@ -8,7 +8,10 @@ export const Header = () => {
   return (
     <div className="w-full h-14 border-b sticky top-0 bg-background z-10 flex flex-col justify-center">
       <div className="container-wrapper flex items-center justify-between border-x px-5 h-full">
-        <Link href={"/"} className="wiggle">
+        <Link
+          href={"/"}
+          className="wiggle"
+        >
           <Logo className="w-6 h-6" />
         </Link>
         <div className="flex items-center justify-end gap-5 md:gap-8">

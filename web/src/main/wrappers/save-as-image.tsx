@@ -4,6 +4,8 @@ import { cn } from "@/shadcn/lib/utils";
 import { saveDivAsPng } from "../utils/save-div-as-image/as-png";
 import { saveDivAsSvg } from "../utils/save-div-as-image/as-svg";
 import { AlertCircle, CheckCircle, Loader2 } from "lucide-react";
+import { Loading } from "../components/loading/loading";
+import { useSafeTheme } from "./theme-provider";
 
 type Format = "PNG" | "SVG";
 const FORMATS: Format[] = ["PNG", "SVG"];
@@ -16,10 +18,13 @@ const MESSAGES = {
 export const SaveAsImage: React.FC<{
   className?: string;
   id?: string;
+  appendTheme?: boolean;
   children: React.ReactNode;
-}> = ({ className, id = "image", children }) => {
+}> = ({ className, id = "image", appendTheme = false, children }) => {
+  const { hydrated, theme } = useSafeTheme();
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const timerRef = useRef<number | null>(null);
+  const finalId = appendTheme ? `${id}-${theme}` : id;
 
   // clear any pending timeout on unmount
   useEffect(
@@ -38,21 +43,23 @@ export const SaveAsImage: React.FC<{
     async (format: Format) => {
       setStatus("loading");
       try {
-        const { success } = format === "PNG" ? await saveDivAsPng({ divId: id, fileName: id }) : await saveDivAsSvg({ divId: id, fileName: id });
+        const { success } = format === "PNG" ? await saveDivAsPng({ divId: finalId, fileName: finalId }) : await saveDivAsSvg({ divId: finalId, fileName: finalId });
         setStatus(success ? "success" : "error");
       } catch {
         setStatus("error");
       }
       reset();
     },
-    [id, reset]
+    [id, reset, finalId]
   );
+
+  if (appendTheme && !hydrated) return <Loading />;
 
   return (
     <>
       <div
         className={cn(className)}
-        id={id}
+        id={finalId}
       >
         {children}
       </div>

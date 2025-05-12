@@ -1,26 +1,27 @@
 "use client";
+import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
+import { ComponentProps, useEffect, useState } from "react";
 
-import * as React from "react";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useTheme } from "next-themes";
-
-export function ThemeProvider({ children, ...props }: React.ComponentProps<typeof NextThemesProvider>) {
+export function ThemeProvider({ children, ...props }: ComponentProps<typeof NextThemesProvider>) {
   return (
-    <NextThemesProvider attribute="class" defaultTheme="system" enableSystem {...props}>
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      {...props}
+    >
       {children}
     </NextThemesProvider>
   );
 }
 
 export const useSafeTheme = () => {
-  const { theme, resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    setHydrated(true);
   }, []);
 
-  return { mounted, theme: mounted ? theme : "light", resolvedTheme: mounted ? resolvedTheme : "light", setTheme };
+  return { hydrated, theme: hydrated ? resolvedTheme : "light", setTheme };
 };

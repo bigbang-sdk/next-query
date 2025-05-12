@@ -1,13 +1,18 @@
 "use client";
 import { HeroSvg } from "@/main/components/graphics/library/hero/svg/hero-svg";
+import { Loading } from "@/main/components/loading/loading";
 import { SaveAsImage } from "@/main/wrappers/save-as-image";
 import { useSafeTheme } from "@/main/wrappers/theme-provider";
 
 export default function PageClient() {
-  const { theme } = useSafeTheme();
+  const { hydrated, theme } = useSafeTheme();
+
+  if (!hydrated) return <Loading />;
+
   return (
     <SaveAsImage
-      id={`hero-${theme}`}
+      id={`hero`}
+      appendTheme
       className="w-full"
     >
       <HeroSvg

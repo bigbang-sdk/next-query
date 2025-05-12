@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import { useTheme } from "next-themes";
 import "highlight.js/styles/github.css";
 import "highlight.js/styles/github-dark.css";
+import { useSafeTheme } from "@/main/wrappers/theme-provider";
 
 export const HighlightThemeLoader = () => {
-  const { resolvedTheme } = useTheme();
+  const { theme } = useSafeTheme();
 
   useEffect(() => {
     const linkId = "hljs-theme-link";
@@ -19,12 +19,12 @@ export const HighlightThemeLoader = () => {
       document.head.appendChild(link);
     }
 
-    const href = resolvedTheme === "dark" ? "/highlight/github-dark.css" : "/highlight/github.css";
+    const href = theme === "dark" ? "/highlight/github-dark.css" : "/highlight/github.css";
 
     if (link.href !== location.origin + href) {
       link.href = href;
     }
-  }, [resolvedTheme]);
+  }, [theme]);
 
   return null;
 };
