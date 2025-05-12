@@ -1,6 +1,6 @@
 "use client";
-import { HeroSvg } from "@/main/components/graphics/library/hero/svg/hero-svg";
-import { Loading } from "@/main/components/loading/loading";
+import { HeroSvg } from "@/main/components/lib/graphics/library/hero/svg/hero-svg";
+import { Loading } from "@/main/components/global/loading/loading";
 import { SaveAsImage } from "@/main/wrappers/save-as-image";
 import { useSafeTheme } from "@/main/wrappers/theme-provider";
 

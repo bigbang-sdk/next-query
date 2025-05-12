@@ -4,7 +4,7 @@ import { cn } from "@/shadcn/lib/utils";
 import { saveDivAsPng } from "../utils/save-div-as-image/as-png";
 import { saveDivAsSvg } from "../utils/save-div-as-image/as-svg";
 import { AlertCircle, CheckCircle, Loader2 } from "lucide-react";
-import { Loading } from "../components/loading/loading";
+import { Loading } from "../components/global/loading/loading";
 import { useSafeTheme } from "./theme-provider";
 
 type Format = "PNG" | "SVG";
@@ -50,7 +50,7 @@ export const SaveAsImage: React.FC<{
       }
       reset();
     },
-    [id, reset, finalId]
+    [reset, finalId]
   );
 
   if (appendTheme && !hydrated) return <Loading />;

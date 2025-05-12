@@ -1,7 +1,7 @@
-import { DocPage } from "./[category]/[doc]/page";
 import { Suspense } from "react";
-import { Loading } from "@/main/components/loading/loading";
+import { Loading } from "@/main/components/global/loading/loading";
 import { Metadata } from "next";
+import { DocPage } from "@/app/(routes)/docs/[category]/[doc]/_components/doc-page";
 
 export const metadata: Metadata = {
   title: "Getting Started: Overview / Next Query",

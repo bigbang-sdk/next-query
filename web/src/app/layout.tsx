@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { geistSans, geistMono } from "@/main/utils/fonts";
 import { ThemeProvider } from "@/main/wrappers/theme-provider";
-import { ThemeToggle } from "@/main/components/theme/theme-toggle";
-import { Header } from "@/main/components/header/header";
-import { Footer } from "@/main/components/footer/footer";
+import { ThemeToggle } from "@/main/components/ui/theme-toggle";
+import { Header } from "@/main/components/global/header/header";
+import { Footer } from "@/main/components/global/footer/footer";
+import ReactScan from "@/main/lib/react-scan";
 
 export const metadata: Metadata = {
   title: "Next Query",
@@ -21,6 +22,7 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
     >
+      {process.env.VERCEL_ENV !== "production" && <ReactScan />}
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
           <Header />

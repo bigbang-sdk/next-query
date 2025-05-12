@@ -1,11 +1,11 @@
 import { Suspense } from "react";
-import { BorderLines } from "@/main/components/graphics/library/query-patterns/components/components/border-lines/border-lines";
-import { GridLines } from "@/main/components/graphics/library/query-patterns/components/components/grid-lines/grid-lines";
-import { CANVAS_DEFAULTS } from "@/main/components/graphics/library/query-patterns/components/utils/defaults";
-import { T_QUERY_OPTION } from "@/main/components/graphics/library/query-patterns/components/utils/types";
-import { QueryPatternSvg } from "@/main/components/graphics/library/query-patterns/svg/query-pattern-svg";
-import { Loading } from "@/main/components/loading/loading";
-import { SVG } from "@/main/components/svg-helpers/svg-helpers";
+import { BorderLines } from "@/main/components/lib/graphics/library/query-patterns/components/components/border-lines/border-lines";
+import { GridLines } from "@/main/components/lib/graphics/library/query-patterns/components/components/grid-lines/grid-lines";
+import { CANVAS_DEFAULTS } from "@/main/components/lib/graphics/library/query-patterns/components/utils/defaults";
+import { T_QUERY_OPTION } from "@/main/components/lib/graphics/library/query-patterns/components/utils/types";
+import { QueryPatternSvg } from "@/main/components/lib/graphics/library/query-patterns/svg/query-pattern-svg";
+import { Loading } from "@/main/components/global/loading/loading";
+import { SVG } from "@/main/components/lib/svg-helpers/svg-helpers";
 import { SaveAsImage } from "@/main/wrappers/save-as-image";
 import { notFound } from "next/navigation";
 
